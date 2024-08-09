@@ -34,32 +34,29 @@ def filter_suspicious_packets(packets, max_payload_size):
 def filter_packets_by_tcp_flags(packets, flags):
     return [p for p in packets if TCP in p and p[TCP].flags & flags]
 
-def parse_beacon_frames(packets):
-    beacon_frames = [p for p in packets if p.haslayer(Dot11Beacon)]
-    channel_info = {}
-    for beacon in beacon_frames:
-        ssid = beacon.info.decode('utf-8', 'ignore')
-        bssid = beacon.addr3
-        channel = ord(beacon[Dot11Elt:3].info)
-        power_constraint = get_power_constraint(beacon)
-        if channel not in channel_info:
-            channel_info[channel] = []
-        channel_info[channel].append((ssid, bssid, power_constraint))
-    return channel_info
+def get_time(packets):
+    if packets:
+        first_packet_time = packets[0].time
+        last_packet_time = packets[-1].time
+        start_time = datetime.fromtimestamp(first_packet_time)
+        end_time = datetime.fromtimestamp(last_packet_time)
+        duration_seconds = end_time - start_time
 
-def get_power_constraint(beacon):
-    power_constraint_elem = beacon.getlayer(Dot11Elt, ID=32)
-    if power_constraint_elem:
-        return ord(power_constraint_elem.info)
-    return None
+        total_seconds = int(duration_seconds.total_seconds())
 
-def parse_management_frames(packets):
-    management_frames = [p for p in packets if p.haslayer(Dot11) and p.type == 0]
-    return [(frame.subtype, frame.addr2, frame.addr1) for frame in management_frames]
+        # Calculate hours, minutes, and seconds
+        hours, remainder = divmod(total_seconds, 3600)
+        minutes, seconds = divmod(remainder, 60)
 
+        # Format as HH:MM:SS
+        formatted_duration = f"{hours:02}:{minutes:02}:{seconds:02}"
+        # duration = str(datetime.utcfromtimestamp(duration_seconds).strftime('%H:%M:%S'))
+        return start_time.isoformat(),end_time.isoformat(),formatted_duration
+    
 
 def analyze_pcap(pcap_file):
     packets = rdpcap(pcap_file)
+    time = get_time(packets)
     tcp_packets, udp_packets, icmp_packets, other_packets = filter_packets(packets)
     source_ip_packets = filter_packets_by_source_ip(packets, "192.168.0.1")
     dest_port_packets = filter_packets_by_destination_port(packets, 80)
@@ -96,10 +93,12 @@ def analyze_pcap(pcap_file):
 
     my_list = [item for item in vulnerabilities if item['number_of_detected'] != 0]
 
-
     # Build results dictionary
     result = {
         'file_name':pcap_file,
+        'start_time':time[0],
+        'end_time':time[1],
+        'duration':time[2],
         'tcp_packets_count': len(tcp_packets),
         'udp_packets_count': len(udp_packets),
         'icmp_packets_count': len(icmp_packets),
@@ -119,7 +118,7 @@ def analyze_pcap(pcap_file):
     return result
 
 # Example usage
-result = analyze_pcap('bruteforce.pcap')
+result = analyze_pcap('sql pcap.pcapng')
 print(result)
 
 
