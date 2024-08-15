@@ -38,8 +38,8 @@ def get_time(packets):
     if packets:
         first_packet_time = packets[0].time
         last_packet_time = packets[-1].time
-        start_time = datetime.fromtimestamp(first_packet_time)
-        end_time = datetime.fromtimestamp(last_packet_time)
+        start_time = datetime.fromtimestamp(float(first_packet_time))
+        end_time = datetime.fromtimestamp(float(last_packet_time))
         duration_seconds = end_time - start_time
 
         total_seconds = int(duration_seconds.total_seconds())
