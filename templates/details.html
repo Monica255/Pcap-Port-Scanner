@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Details Vulnerabilities</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-100">
+    <div class="container mx-auto px-10">
+      <div class="flex w-full py-20 min-h-lvh justify-center items-center">
+        <div class="px-4 py-2 bg-white rounded-md w-full h-fit shadow-md">
+          <h1 class="text-2xl text-left font-bold py-3">
+            Results / Vulnerabilities / {{ vulnerability_type }}
+          </h1>
+          <hr class="py-3" />
+          <div class="relative overflow-x-auto">
+            <table
+              class="w-full text-sm text-left rtl:text-right text-gray-500"
+            >
+              <thead class="text-xs text-gray-700 uppercase border">
+                <tr class="border">
+                  <!-- Generate table headers dynamically -->
+                  {% if details and details[0] %}
+                    {% for key in details[0].keys() %}
+                      <th scope="col" class="px-6 py-3 border">{{ key | replace("_", " ") | capitalize }}</th>
+                    {% endfor %}
+                  {% endif %}
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Generate table rows dynamically -->
+                {% for detail in details %}
+                <tr class="border">
+                  {% for key, value in detail.items() %}
+                    <td class="px-6 py-3 border">{{ value }}</td>
+                  {% endfor %}
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-slate-100">
+    <div class="container mx-auto px-10">
+      <div class="flex w-full py-20 min-h-lvh justify-center items-center">
+        <div class="px-4 py-2 bg-white rounded-md w-full h-fit shadow-md">
+          <h1 class="text-2xl text-left font-bold py-3">
+            PCAP Analysis Results
+          </h1>
+          <hr class="py-3" />
+          <div class="relative overflow-x-auto">
+            <table
+              class="w-full text-sm text-left rtl:text-right text-gray-500"
+            >
+              <tr class="border">
+                <th class="px-4 border py-2">File Name</th>
+                <td class="px-4 py-2">{{ result['file_name'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">Start Time</th>
+                <td class="px-4 py-2">{{ result['start_time'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">End Time</th>
+                <td class="px-4 py-2">{{ result['end_time'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">Duration</th>
+                <td class="px-4 py-2">{{ result['duration'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">TCP Packets Count</th>
+                <td class="px-4 py-2">{{ result['tcp_packets_count'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">UDP Packets Count</th>
+                <td class="px-4 py-2">{{ result['udp_packets_count'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">ICMP Packets Count</th>
+                <td class="px-4 py-2">{{ result['icmp_packets_count'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">Other Packets Count</th>
+                <td class="px-4 py-2">{{ result['other_packets_count'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">HTTP Packets Count</th>
+                <td class="px-4 py-2">{{ result['http_packets_count'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">SYN Packets Count</th>
+                <td class="px-4 py-2">{{ result['syn_packets_count'] }}</td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">Suspicious Packets Count</th>
+                <td class="px-4 py-2">
+                  {{ result['suspicious_packets_count'] }}
+                </td>
+              </tr>
+              <tr class="border">
+                <th class="px-4 border py-2">DNS Domain</th>
+                <td class="px-4 py-2">
+                  {% if result['dns_domains'] %}
+                  <a href="/dns" class="text-blue-400"> See details </a>{% else
+                  %} 0 {% endif %}
+                </td>
+              </tr>
+
+              <tr class="border">
+                <th class="px-4 border py-2">Total Vulnerabilities Detected</th>
+                <td class="px-4 py-2">
+                  {{ result['total_vulnerabilities_detected'] }}
+                </td>
+              </tr>
+            </table>
+
+            <h1 class="text-2xl text-left font-bold py-3 mt-3">
+              Vulnerabilities
+            </h1>
+            <hr class="py-3" />
+            <table
+              class="w-full text-sm text-left rtl:text-right text-gray-500"
+            >
+              <thead class="text-xs text-gray-700 uppercase border">
+                <tr class="border">
+                  <th scope="col" class="px-6 py-3 border">
+                    Vulnerability Type
+                  </th>
+                  <th scope="col" class="px-6 py-3 border">Message</th>
+                  <th scope="col" class="px-6 py-3 border">
+                    Number Of Detected
+                  </th>
+                  <th scope="col" class="px-6 py-3 border">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% if result['vulnerabilities'] %} {% for vulnerability in
+                result['vulnerabilities'] %}
+                <tr class="border">
+                  <td class="px-4 py-2 border">
+                    {% if vulnerability['details'] %}
+                    <a
+                      class="text-blue-400"
+                      href="{{ url_for('details', vulnerability_type=vulnerability['vulnerability_type']) }}"
+                    >
+                      {{ vulnerability['vulnerability_type'] }}
+                    </a>
+                    {% else %} {{ vulnerability['vulnerability_type'] }} {%
+                    endif %}
+                  </td>
+
+                  <td class="px-4 py-2 border">
+                    {{ vulnerability['message'] }}
+                  </td>
+                  <td class="px-4 py-2 border">
+                    {{ vulnerability['number_of_detected'] }}
+                  </td>
+                  <td class="px-4 py-2 border">
+                    {% if vulnerability['description'] %} {{
+                    vulnerability['description'] }} {% else %} No description
+                    available {% endif %}
+                  </td>
+                </tr>
+                {% endfor %} {% else %}
+                <tr class="border">
+                  <td class="px-4 py-2">No vulnerabilities detected</td>
+                </tr>
+                {% endif %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script></script>
+</html>

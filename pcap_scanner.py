@@ -1,6 +1,6 @@
 from scapy.all import *
 
-import vulnerability_scanner
+from vulnerability_scanner import *
 
 def filter_packets(packets):
     tcp_packets = [p for p in packets if TCP in p]
@@ -75,13 +75,15 @@ def analyze_pcap(pcap_file):
     # - NXDomain
     # - phishing
     vulnerabilities = []
-    ddos = vulnerability_scanner.detect_ddos(pcap_file)
-    UP = vulnerability_scanner.detect_unencrypted_traffic(pcap_file)
-    SQL = vulnerability_scanner.detect_sql_injection(pcap_file)
-    WC = vulnerability_scanner.detect_weak_credentials(pcap_file)
-    NXD = vulnerability_scanner.detect_nxdomain(pcap_file)
-    phishing = vulnerability_scanner.detect_hidden_characters_in_domains(pcap_file)
-    bf = vulnerability_scanner.detect_brute_force(pcap_file)
+    ddos = detect_ddos(pcap_file)
+    UP = detect_unencrypted_traffic(pcap_file)
+    SQL = detect_sql_injection(pcap_file)
+    WC = detect_weak_credentials(pcap_file)
+    NXD = detect_nxdomain(pcap_file)
+    phishing = detect_hidden_characters_in_domains(pcap_file)
+    bf = detect_brute_force(pcap_file)
+    arp = detect_arp_spoofing(pcap_file)
+    port_scan = detect_port_scanning(pcap_file)
 
     vulnerabilities.append(ddos)
     vulnerabilities.append(UP)
@@ -90,6 +92,8 @@ def analyze_pcap(pcap_file):
     vulnerabilities.append(NXD)
     vulnerabilities.append(phishing)
     vulnerabilities.append(bf)
+    vulnerabilities.append(arp)
+    vulnerabilities.append(port_scan)
 
     my_list = [item for item in vulnerabilities if item['number_of_detected'] != 0]
 
@@ -118,7 +122,7 @@ def analyze_pcap(pcap_file):
     return result
 
 # Example usage
-result = analyze_pcap('sql pcap.pcapng')
+result = analyze_pcap('formbook.pcap')
 print(result)
 
 
