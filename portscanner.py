@@ -138,6 +138,8 @@ def network_scan(target_ip):
         "available_devices": available_devices
     }
 
+    print(scan_result)
+
     return scan_result
 
 # import module 

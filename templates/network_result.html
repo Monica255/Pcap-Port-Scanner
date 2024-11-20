@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Network Scan Results</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-5 lg:px-20 py-10">
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <!-- Header Section -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 pb-3 border-blue-900">
+          Network Scan Results
+        </h1>
+        <p class="text-sm text-gray-500 mb-6">
+          Berikut rincian dan temuan dari pemindaian jaringan yang telah dilakukan.
+        </p>
+
+        <!-- Scan Summary Section -->
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Scan Summary</h2>
+          <div class="overflow-x-auto">
+            <table class="table-auto w-full text-sm text-left text-gray-600">
+              <tbody>
+                <tr class="bg-gray-50">
+                  <th class="px-4 py-2 font-medium text-gray-700">Scan Type</th>
+                  <td class="px-4 py-2">{{ result['type'] }}</td>
+                </tr>
+                <tr>
+                  <th class="px-4 py-2 font-medium text-gray-700">IP Address</th>
+                  <td class="px-4 py-2">{{ result['network'] }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Available Devices Section -->
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Devices Found</h2>
+          <p class="text-sm text-gray-500 mb-4">
+            Berikut adalah daftar perangkat yang tersedia pada jaringan:
+          </p>
+          
+          {% if result['available_devices'] %}
+          <div class="overflow-x-auto">
+            <table class="table-auto w-full text-sm text-left text-gray-600 border border-gray-300">
+              <thead>
+                <tr class="bg-gray-50">
+                  <th class="px-4 py-3 border-b font-medium text-gray-700">IP Address</th>
+                  <th class="px-4 py-3 border-b font-medium text-gray-700">MAC Address</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for device in result['available_devices'] %}
+                <tr>
+                  <td class="px-4 py-2 border">{{ device[0] }}</td>
+                  <td class="px-4 py-2 border">{{ device[1] }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {% else %}
+          <p class="text-gray-500">No devices found on the network.</p>
+          {% endif %}
+        </div>
+
+        <!-- Back to Scan Section -->
+        <div class="mt-8 text-center">
+          <a href="/" class="px-6 py-3 bg-blue-900 text-white rounded-lg shadow-md hover:bg-blue-800 inline-block">
+            Back to Scan Page
+          </a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

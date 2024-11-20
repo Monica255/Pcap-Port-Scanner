@@ -81,7 +81,23 @@ def create_app(test_config=None):
         # Save the result in session to display on another page
         session['scan_result'] = result
         
-        return render_template('scan_result.html', result=result, target_ip=target_ip, start_port=start_port, end_port=end_port)
+        return render_template('scan_result.html', result=result)
+    
+    @app.route("/scan-network", methods=['POST'])
+    def scan_network():
+        print(request.form)
+        # Get the form data from the request
+        target_ip = request.form.get('network_range')
+        print("target")
+        print(target_ip)
+        
+        # Start scanning in a separate thread to avoid blocking
+        result = network_scan(target_ip)
+        
+        # Save the result in session to display on another page
+        session['scan_result'] = result
+        
+        return render_template('network_result.html', result=result)
 
 
     @app.route("/results", methods=['GET'])
