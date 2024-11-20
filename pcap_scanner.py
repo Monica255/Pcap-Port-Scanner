@@ -123,6 +123,6 @@ def analyze_pcap(pcap_file):
 
 # Example usage
 result = analyze_pcap('formbook.pcap')
-print(result)
+# print(result)
 
 

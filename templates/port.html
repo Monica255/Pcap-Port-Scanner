@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Port Scanner</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+    <div class="container mx-auto px-10 py-10">
+        <h1 class="text-3xl font-bold text-center text-blue-900">Port Scanner</h1>
+        <p class="text-gray-600 text-center mt-2 mb-8">Gunakan alat ini untuk memindai port terbuka pada jaringan lokal Anda.</p>
+        
+        <!-- Scan Open Port Section -->
+        <div class="bg-white shadow-md rounded-lg p-6 mb-10">
+            <h2 class="text-2xl font-semibold text-blue-900 mb-4">Scan Open Port</h2>
+            <form 
+            action="/scan-port"
+            method="POST"
+            class="space-y-4">
+                <div>
+                    <label for="target" class="block text-gray-700">IP Address</label>
+                    <input type="text" id="target" name="target" placeholder="Contoh: 192.168.1.1"
+                        pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
+                        class="w-full p-2 border rounded-lg focus:ring-blue-900 focus:border-blue-900" required>
+                    <small class="text-gray-500">Masukkan alamat IP (contoh: 192.168.1.1)</small>
+                </div>
+                <div class="flex space-x-4">
+                    <div class="w-1/2">
+                        <label for="start-port" class="block text-gray-700">Start Port</label>
+                        <input type="number" id="start-port" name="start-port" min="0" max="65535"
+                            class="w-full p-2 border rounded-lg focus:ring-blue-900 focus:border-blue-900" required>
+                    </div>
+                    <div class="w-1/2">
+                        <label for="end-port" class="block text-gray-700">End Port</label>
+                        <input type="number" id="end-port" name="end-port" min="0" max="65535"
+                            class="w-full p-2 border rounded-lg focus:ring-blue-900 focus:border-blue-900" required>
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-900 text-white rounded-lg shadow-md hover:bg-blue-800">
+                        Scan Port
+                    </button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Scan Network Section -->
+        <div class="bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-2xl font-semibold text-blue-900 mb-4">Scan Network</h2>
+            <form action="/scan-network" method="POST" class="space-y-4">
+                <div>
+                    <label for="network-range" class="block text-gray-700">Range IP Jaringan</label>
+                    <input type="text" id="network-range" name="network_range" placeholder="Contoh: 192.168.1.0/24"
+                        class="w-full p-2 border rounded-lg focus:ring-blue-900 focus:border-blue-900" required>
+                </div>
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="px-6 py-2 bg-blue-900 text-white rounded-lg shadow-md hover:bg-blue-800">
+                        Scan Jaringan
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Back to Dashboard Button -->
+        <div class="text-center mt-10">
+            <a href="/" class="px-6 py-3 bg-blue-900 text-white rounded-lg shadow-md hover:bg-blue-800 inline-block">
+                Kembali ke Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- <script>
+        // Optional JavaScript for additional validation if needed
+        document.querySelector('form').addEventListener('submit', function(event) {
+            const startPort = document.getElementById('start-port').value;
+            const endPort = document.getElementById('end-port').value;
+            
+            if (startPort < 0 || startPort > 65535 || endPort < 0 || endPort > 65535) {
+                event.preventDefault();
+                alert('Port values must be between 0 and 65535.');
+            }
+        });
+    </script> -->
+</body>
+</html>

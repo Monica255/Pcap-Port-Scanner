@@ -3,119 +3,139 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Results</title>
+    <title>PCAP Analysis Results</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-slate-100">
-    <div class="container mx-auto px-10">
-      <div class="flex w-full py-20 min-h-lvh justify-center items-center">
-        <div class="px-4 py-2 bg-white rounded-md w-full h-fit shadow-md">
-          <h1 class="text-2xl text-left font-bold py-3">
-            PCAP Analysis Results
-          </h1>
-          <hr class="py-3" />
-          <div class="relative overflow-x-auto">
-            <table
-              class="w-full text-sm text-left rtl:text-right text-gray-500"
-            >
-              <tr class="border">
-                <th class="px-4 border py-2">File Name</th>
-                <td class="px-4 py-2">{{ result['file_name'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">Start Time</th>
-                <td class="px-4 py-2">{{ result['start_time'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">End Time</th>
-                <td class="px-4 py-2">{{ result['end_time'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">Duration</th>
-                <td class="px-4 py-2">{{ result['duration'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">TCP Packets Count</th>
-                <td class="px-4 py-2">{{ result['tcp_packets_count'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">UDP Packets Count</th>
-                <td class="px-4 py-2">{{ result['udp_packets_count'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">ICMP Packets Count</th>
-                <td class="px-4 py-2">{{ result['icmp_packets_count'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">Other Packets Count</th>
-                <td class="px-4 py-2">{{ result['other_packets_count'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">HTTP Packets Count</th>
-                <td class="px-4 py-2">{{ result['http_packets_count'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">SYN Packets Count</th>
-                <td class="px-4 py-2">{{ result['syn_packets_count'] }}</td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">Suspicious Packets Count</th>
-                <td class="px-4 py-2">
-                  {{ result['suspicious_packets_count'] }}
-                </td>
-              </tr>
-              <tr class="border">
-                <th class="px-4 border py-2">DNS Domain</th>
-                <td class="px-4 py-2">
-                  {% if result['dns_domains'] %}
-                  <a href="/dns" class="text-blue-400"> See details </a>{% else
-                  %} 0 {% endif %}
-                </td>
-              </tr>
+  <body class="bg-gray-100">
+    <div class="container mx-auto px-5 lg:px-20 py-10">
+      <div class="bg-white rounded-lg shadow-lg p-8">
+        <!-- Header Section -->
+        <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 pb-3 border-blue-900">
+          PCAP Analysis Results
+        </h1>
+        <p class="text-sm text-gray-500 mb-6">
+          Berikut rincian dan temuan dari berkas PCAP yang dianalisis.
+        </p>
 
-              <tr class="border">
-                <th class="px-4 border py-2">Total Vulnerabilities Detected</th>
-                <td class="px-4 py-2">
-                  {{ result['total_vulnerabilities_detected'] }}
-                </td>
-              </tr>
+        <!-- Summary Section -->
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">File Details</h2>
+          <div class="overflow-x-auto">
+            <table class="table-auto w-full text-sm text-left text-gray-600">
+              <tbody>
+                <tr class="bg-gray-50">
+                  <th class="px-4 py-2 font-medium text-gray-700">File Name</th>
+                  <td class="px-4 py-2">{{ result['file_name'] }}</td>
+                </tr>
+                <tr>
+                  <th class="px-4 py-2 font-medium text-gray-700">Start Time</th>
+                  <td class="px-4 py-2">{{ result['start_time'] }}</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <th class="px-4 py-2 font-medium text-gray-700">End Time</th>
+                  <td class="px-4 py-2">{{ result['end_time'] }}</td>
+                </tr>
+                <tr>
+                  <th class="px-4 py-2 font-medium text-gray-700">Duration</th>
+                  <td class="px-4 py-2">{{ result['duration'] }}</td>
+                </tr>
+                <tr class="bg-gray-50">
+                  <th class="px-4 py-2 font-medium text-gray-700">DNS Domain</th>
+                  <td class="px-4 py-2">
+                    {% if result['dns_domains'] %}
+                    <a href="/dns" class="text-blue-600 hover:underline">See details</a>
+                    {% else %}
+                    0
+                    {% endif %}
+                  </td>
+                </tr>
+              </tbody>
             </table>
+          </div>
+        </div>
 
-            <h1 class="text-2xl text-left font-bold py-3 mt-3">
-              Vulnerabilities
-            </h1>
-            <hr class="py-3" />
+        <!-- Packet Counts Section -->
+        <div class="mb-8">
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Packet Analysis</h2>
+          <p class="text-sm text-gray-500 mb-4">
+            Bagian ini memberikan rincian berbagai jenis paket yang terdeteksi selama analisis.
+          </p>
+          <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="bg-blue-50 p-4 rounded shadow">
+              <p class="text-blue-900 font-semibold">TCP Packets</p>
+              <p class="text-gray-600">{{ result['tcp_packets_count'] }}</p>
+              <small class="text-gray-500">Paket yang menggunakan protokol 
+                <a href="https://online.binus.ac.id/2021/09/24/tcp-ip-transmission-control-protocol-internet-protocol/" target="_blank" class="text-blue-600 hover:underline">protokol TCP</a>.
+              </small>
+            </div>
+            <div class="bg-blue-50 p-4 rounded shadow">
+              <p class="text-blue-900 font-semibold">UDP Packets</p>
+              <p class="text-gray-600">{{ result['udp_packets_count'] }}</p>
+              <small class="text-gray-500">Paket yang menggunakan 
+                <a href="https://it.telkomuniversity.ac.id/udp-adalah/" target="_blank" class="text-blue-600 hover:underline">protokol UDP</a>.
+              </small>
+            </div>
+            <div class="bg-blue-50 p-4 rounded shadow">
+              <p class="text-blue-900 font-semibold">ICMP Packets</p>
+              <p class="text-gray-600">{{ result['icmp_packets_count'] }}</p>
+              <small class="text-gray-500">Paket yang menggunakan 
+                <a href="https://it.telkomuniversity.ac.id/icmp-adalah/" target="_blank" class="text-blue-600 hover:underline">protokol ICMP</a>.
+              </small>
+            </div>
+            <div class="bg-blue-50 p-4 rounded shadow">
+              <p class="text-blue-900 font-semibold">HTTP Packets</p>
+              <p class="text-gray-600">{{ result['http_packets_count'] }}</p>
+              <small class="text-gray-500">Permintaan dan respons HTTP terdeteksi.</small>
+            </div>
+            <div class="bg-blue-50 p-4 rounded shadow">
+              <p class="text-blue-900 font-semibold">Suspicious Packets</p>
+              <p class="text-gray-600">{{ result['suspicious_packets_count'] }}</p>
+              <small class="text-gray-500">Paket ditandai sebagai berpotensi berbahaya.</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vulnerabilities Section -->
+        <div>
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Vulnerabilities</h2>
+          <p class="text-sm text-gray-500 mb-4">
+            Kerentanan berikut terdeteksi selama analisis:
+          </p>
+          <div class="overflow-x-auto">
             <table
-              class="w-full text-sm text-left rtl:text-right text-gray-500"
+              class="table-auto w-full text-sm text-gray-600 border border-gray-300"
             >
-              <thead class="text-xs text-gray-700 uppercase border">
-                <tr class="border">
-                  <th scope="col" class="px-6 py-3 border">
+              <thead>
+                <tr class="bg-gray-50">
+                  <th class="px-4 py-3 border-b font-medium text-gray-700">
                     Vulnerability Type
                   </th>
-                  <th scope="col" class="px-6 py-3 border">Message</th>
-                  <th scope="col" class="px-6 py-3 border">
+                  <th class="px-4 py-3 border-b font-medium text-gray-700">
+                    Message
+                  </th>
+                  <th class="px-4 py-3 border-b font-medium text-gray-700">
                     Number Of Detected
                   </th>
-                  <th scope="col" class="px-6 py-3 border">Description</th>
+                  <th class="px-4 py-3 border-b font-medium text-gray-700">
+                    Description
+                  </th>
                 </tr>
               </thead>
               <tbody>
-                {% if result['vulnerabilities'] %} {% for vulnerability in
-                result['vulnerabilities'] %}
-                <tr class="border">
+                {% if result['vulnerabilities'] %}
+                {% for vulnerability in result['vulnerabilities'] %}
+                <tr>
                   <td class="px-4 py-2 border">
                     {% if vulnerability['details'] %}
                     <a
-                      class="text-blue-400"
                       href="{{ url_for('details', vulnerability_type=vulnerability['vulnerability_type']) }}"
+                      class="text-blue-600 hover:underline"
                     >
                       {{ vulnerability['vulnerability_type'] }}
                     </a>
-                    {% else %} {{ vulnerability['vulnerability_type'] }} {%
-                    endif %}
+                    {% else %} {{ vulnerability['vulnerability_type'] }} {% endif
+                    %}
                   </td>
-
                   <td class="px-4 py-2 border">
                     {{ vulnerability['message'] }}
                   </td>
@@ -123,14 +143,17 @@
                     {{ vulnerability['number_of_detected'] }}
                   </td>
                   <td class="px-4 py-2 border">
-                    {% if vulnerability['description'] %} {{
-                    vulnerability['description'] }} {% else %} No description
+                    {% if vulnerability['message'] %} {{
+                    vulnerability['message'] }} {% else %} No description
                     available {% endif %}
                   </td>
                 </tr>
-                {% endfor %} {% else %}
-                <tr class="border">
-                  <td class="px-4 py-2">No vulnerabilities detected</td>
+                {% endfor %}
+                {% else %}
+                <tr>
+                  <td colspan="4" class="text-center py-4 text-gray-500">
+                    No vulnerabilities detected.
+                  </td>
                 </tr>
                 {% endif %}
               </tbody>
@@ -140,5 +163,4 @@
       </div>
     </div>
   </body>
-  <script></script>
 </html>
