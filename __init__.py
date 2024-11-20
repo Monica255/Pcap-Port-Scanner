@@ -87,7 +87,7 @@ def create_app(test_config=None):
     def scan_network():
         print(request.form)
         # Get the form data from the request
-        target_ip = request.form.get('network_range')
+        target_ip = request.form.get('network')
         print("target")
         print(target_ip)
         

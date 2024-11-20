@@ -51,8 +51,9 @@
             <h2 class="text-2xl font-semibold text-blue-900 mb-4">Scan Network</h2>
             <form action="/scan-network" method="POST" class="space-y-4">
                 <div>
-                    <label for="network" class="block text-gray-700">IP Jaringan</label>
-                    <input type="text" id="network" name="network" placeholder="Contoh: 192.168.1.0/24"
+                    <label for="network" class="block text-gray-700">IP Router</label>
+                    <input type="text" id="network" name="network" placeholder="Contoh: 192.168.1.0"
+                        pattern="^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$"
                         class="w-full p-2 border rounded-lg focus:ring-blue-900 focus:border-blue-900" required>
                 </div>
                 <div class="flex justify-end">
