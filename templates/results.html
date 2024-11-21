@@ -24,26 +24,26 @@
             <table class="table-auto w-full text-sm text-left text-gray-600">
               <tbody>
                 <tr class="bg-gray-50">
-                  <th class="px-4 py-2 font-medium text-gray-700">File Name</th>
+                  <th class="px-4 py-2 font-medium text-gray-700">Nama File</th>
                   <td class="px-4 py-2">{{ result['file_name'] }}</td>
                 </tr>
                 <tr>
-                  <th class="px-4 py-2 font-medium text-gray-700">Start Time</th>
+                  <th class="px-4 py-2 font-medium text-gray-700">Waktu Mulai</th>
                   <td class="px-4 py-2">{{ result['start_time'] }}</td>
                 </tr>
                 <tr class="bg-gray-50">
-                  <th class="px-4 py-2 font-medium text-gray-700">End Time</th>
+                  <th class="px-4 py-2 font-medium text-gray-700">Waktu Berakhir</th>
                   <td class="px-4 py-2">{{ result['end_time'] }}</td>
                 </tr>
                 <tr>
-                  <th class="px-4 py-2 font-medium text-gray-700">Duration</th>
+                  <th class="px-4 py-2 font-medium text-gray-700">Durasi</th>
                   <td class="px-4 py-2">{{ result['duration'] }}</td>
                 </tr>
                 <tr class="bg-gray-50">
                   <th class="px-4 py-2 font-medium text-gray-700">DNS Domain</th>
                   <td class="px-4 py-2">
                     {% if result['dns_domains'] %}
-                    <a href="/dns" class="text-blue-600 hover:underline">See details</a>
+                    <a href="/dns" class="text-blue-600 hover:underline">Lihat detail</a>
                     {% else %}
                     0
                     {% endif %}
@@ -62,33 +62,34 @@
           </p>
           <div class="grid grid-cols-2 lg:grid-cols-3 gap-4">
             <div class="bg-blue-50 p-4 rounded shadow">
-              <p class="text-blue-900 font-semibold">TCP Packets</p>
+              <p class="text-blue-900 font-semibold">Paket TCP</p>
               <p class="text-gray-600">{{ result['tcp_packets_count'] }}</p>
               <small class="text-gray-500">Paket yang menggunakan protokol 
                 <a href="https://online.binus.ac.id/2021/09/24/tcp-ip-transmission-control-protocol-internet-protocol/" target="_blank" class="text-blue-600 hover:underline">protokol TCP</a>.
               </small>
             </div>
             <div class="bg-blue-50 p-4 rounded shadow">
-              <p class="text-blue-900 font-semibold">UDP Packets</p>
+              <p class="text-blue-900 font-semibold">Paket UDP</p>
               <p class="text-gray-600">{{ result['udp_packets_count'] }}</p>
               <small class="text-gray-500">Paket yang menggunakan 
                 <a href="https://it.telkomuniversity.ac.id/udp-adalah/" target="_blank" class="text-blue-600 hover:underline">protokol UDP</a>.
               </small>
             </div>
             <div class="bg-blue-50 p-4 rounded shadow">
-              <p class="text-blue-900 font-semibold">ICMP Packets</p>
+              <p class="text-blue-900 font-semibold">Paket ICMP</p>
               <p class="text-gray-600">{{ result['icmp_packets_count'] }}</p>
               <small class="text-gray-500">Paket yang menggunakan 
                 <a href="https://it.telkomuniversity.ac.id/icmp-adalah/" target="_blank" class="text-blue-600 hover:underline">protokol ICMP</a>.
               </small>
             </div>
             <div class="bg-blue-50 p-4 rounded shadow">
-              <p class="text-blue-900 font-semibold">HTTP Packets</p>
+              <p class="text-blue-900 font-semibold">Paket HTTP</p>
               <p class="text-gray-600">{{ result['http_packets_count'] }}</p>
-              <small class="text-gray-500">Permintaan dan respons HTTP terdeteksi.</small>
+              <small class="text-gray-500">Permintaan dan respons 
+                <a href="https://it.telkomuniversity.ac.id/http-adalah/" target="_blank" class="text-blue-600 hover:underline">HTTP</a> terdeteksi.</small>
             </div>
             <div class="bg-blue-50 p-4 rounded shadow">
-              <p class="text-blue-900 font-semibold">Suspicious Packets</p>
+              <p class="text-blue-900 font-semibold">Paket Mencurigakan</p>
               <p class="text-gray-600">{{ result['suspicious_packets_count'] }}</p>
               <small class="text-gray-500">Paket ditandai sebagai berpotensi berbahaya.</small>
             </div>
@@ -110,9 +111,9 @@
                   <th class="px-4 py-3 border-b font-medium text-gray-700">
                     Vulnerability Type
                   </th>
-                  <th class="px-4 py-3 border-b font-medium text-gray-700">
+                  <!-- <th class="px-4 py-3 border-b font-medium text-gray-700">
                     Message
-                  </th>
+                  </th> -->
                   <th class="px-4 py-3 border-b font-medium text-gray-700">
                     Number Of Detected
                   </th>
@@ -136,9 +137,9 @@
                     {% else %} {{ vulnerability['vulnerability_type'] }} {% endif
                     %}
                   </td>
-                  <td class="px-4 py-2 border">
+                  <!-- <td class="px-4 py-2 border">
                     {{ vulnerability['message'] }}
-                  </td>
+                  </td> -->
                   <td class="px-4 py-2 border">
                     {{ vulnerability['number_of_detected'] }}
                   </td>
