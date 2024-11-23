@@ -42,6 +42,7 @@ import nmap
 
 import nmap
 
+#scan IP
 def scanHost(ip, startPort, endPort):
     """Starts a TCP scan on a given IP address and returns scan results with protocol and service info for open ports only."""
     print('[*] Starting TCP port scan on host %s' % ip)
@@ -119,6 +120,7 @@ def tcp_scan(ip, startPort, endPort):
 
 from scapy.all import ARP, Ether, srp
 
+#scan network 
 def network_scan(target_ip):
     # Create an ARP request packet and an Ethernet broadcast packet
     arp = ARP(pdst=target_ip)
