@@ -74,9 +74,9 @@ def analyze_pcap(pcap_file):
     # - weak credential
     # - NXDomain
     # - phishing
+    UP = detect_unencrypted_traffic(pcap_file)
     vulnerabilities = []
     ddos = detect_ddos(pcap_file)
-    UP = detect_unencrypted_traffic(pcap_file)
     SQL = detect_sql_injection(pcap_file)
     # WC = detect_weak_credentials(pcap_file)
     NXD = detect_nxdomain(pcap_file)
@@ -86,7 +86,6 @@ def analyze_pcap(pcap_file):
     port_scan = detect_port_scanning(pcap_file)
 
     vulnerabilities.append(ddos)
-    vulnerabilities.append(UP)
     vulnerabilities.append(SQL)
     # vulnerabilities.append(WC)
     vulnerabilities.append(NXD)
@@ -113,6 +112,7 @@ def analyze_pcap(pcap_file):
         # 'ip_range_packets_count': len(ip_range_packets),
         'http_packets_count': len(http_packets),
         'suspicious_packets_count': len(suspicious_packets),
+        'unencrypted_traffic':UP['number_of_detected'],
         'syn_packets_count': len(syn_packets),
         'dns_domains': domain_info,
         'total_vulnerabilities_detected':len(my_list),
@@ -122,7 +122,7 @@ def analyze_pcap(pcap_file):
     return result
 
 # Example usage
-result = analyze_pcap('formbook.pcap')
+# result = analyze_pcap('formbook.pcap')
 # print(result)
 
 

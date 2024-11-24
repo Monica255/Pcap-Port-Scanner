@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PCAP Analysis Results</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body class="bg-gray-100">
     <div class="container mx-auto px-5 lg:px-20 py-10">
@@ -93,27 +94,42 @@
               <p class="text-gray-600">{{ result['suspicious_packets_count'] }}</p>
               <small class="text-gray-500">Paket ditandai sebagai berpotensi berbahaya.</small>
             </div>
+            <div class="bg-blue-50 p-4 rounded shadow">
+              <p class="text-blue-900 font-semibold">Lalu Lintas Tidak Terenkripsi</p>
+              <p class="text-gray-600">{{ result['unencrypted_traffic'] }}</p>
+              <small class="text-gray-500">Lalu lintas yang tidak terenskripsi.</small>
+            </div>
           </div>
         </div>
 
         <!-- Vulnerabilities Section -->
+        <!-- Vulnerabilities Section -->
         <div>
-          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Vulnerabilities</h2>
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Vulnerabilities Overview</h2>
+          <p class="text-sm text-gray-500 mb-4">
+            Berikut adalah rekapitulasi hasil deteksi kerentanan:
+          </p>
+          <div class="mb-6 flex justify-center">
+            <!-- Vulnerabilities Chart -->
+            <div class="w-72 h-72">
+              <canvas id="vulnerabilitiesChart" width="300" height="300"></canvas>
+            </div>
+            <!-- Risk Level Scale Chart -->
+            <div class="w-72">
+              <canvas id="riskScaleChart" width="300" height="300"></canvas>
+            </div>
+          </div>
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Vulnerabilities List</h2>
           <p class="text-sm text-gray-500 mb-4">
             Kerentanan berikut terdeteksi selama analisis:
           </p>
           <div class="overflow-x-auto">
-            <table
-              class="table-auto w-full text-sm text-gray-600 border border-gray-300"
-            >
+            <table class="table-auto w-full text-sm text-gray-600 border border-gray-300">
               <thead>
                 <tr class="bg-gray-50">
                   <th class="px-4 py-3 border-b font-medium text-gray-700">
                     Vulnerability Type
                   </th>
-                  <!-- <th class="px-4 py-3 border-b font-medium text-gray-700">
-                    Message
-                  </th> -->
                   <th class="px-4 py-3 border-b font-medium text-gray-700">
                     Number Of Detected
                   </th>
@@ -134,25 +150,20 @@
                     >
                       {{ vulnerability['vulnerability_type'] }}
                     </a>
-                    {% else %} {{ vulnerability['vulnerability_type'] }} {% endif
-                    %}
+                    {% else %} {{ vulnerability['vulnerability_type'] }} {% endif %}
                   </td>
-                  <!-- <td class="px-4 py-2 border">
-                    {{ vulnerability['message'] }}
-                  </td> -->
                   <td class="px-4 py-2 border">
                     {{ vulnerability['number_of_detected'] }}
                   </td>
                   <td class="px-4 py-2 border">
-                    {% if vulnerability['message'] %} {{
-                    vulnerability['message'] }} {% else %} No description
-                    available {% endif %}
+                    {% if vulnerability['message'] %} {{ vulnerability['message'] }} {% else %}
+                    No description available {% endif %}
                   </td>
                 </tr>
                 {% endfor %}
                 {% else %}
                 <tr>
-                  <td colspan="4" class="text-center py-4 text-gray-500">
+                  <td colspan="3" class="text-center py-4 text-gray-500">
                     No vulnerabilities detected.
                   </td>
                 </tr>
@@ -161,7 +172,98 @@
             </table>
           </div>
         </div>
+
       </div>
     </div>
+
+    <!-- Chart.js Script -->
+    <script>
+      const vulnerabilities = JSON.parse('{{ result["vulnerabilities"] | tojson | safe }}')
+      // .filter(
+      //   v => v.vulnerability_type !== "Unencrypted Traffic"
+      // );
+      console.log(vulnerabilities); // Should print the array of vulnerabilities
+
+
+      // Data for pie chart
+      const labels = vulnerabilities.map(v => v.vulnerability_type);
+      const data = vulnerabilities.map(v => v.number_of_detected);
+
+      // Data for risk scale chart
+      const totalRisk = data.reduce((acc, curr) => acc + curr, 0);
+
+      const riskLevel = [
+        { range: [0, 10], color: '#36A2EB', label: 'Low Risk' },
+        { range: [11, 50], color: '#FFCE56', label: 'Moderate Risk' },
+        { range: [51, 100], color: '#FF9F40', label: 'High Risk' },
+        { range: [101, Infinity], color: '#FF6384', label: 'Critical Risk' },
+      ];
+
+      const riskCategory = riskLevel.find(
+        level => totalRisk >= level.range[0] && totalRisk <= level.range[1]
+      );
+
+      // Vulnerabilities Pie Chart
+      const ctx = document.getElementById('vulnerabilitiesChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'pie',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Number of Vulnerabilities',
+              data: data,
+              backgroundColor: [
+                '#FF6384',
+                '#36A2EB',
+                '#FFCE56',
+                '#4BC0C0',
+                '#9966FF',
+                '#FF9F40'
+              ],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'top',
+            },
+          },
+        },
+      });
+
+      // Risk Level Scale Chart
+      const ctxRisk = document.getElementById('riskScaleChart').getContext('2d');
+      new Chart(ctxRisk, {
+        type: 'bar',
+        data: {
+          labels: ['Risk Level'],
+          datasets: [
+            {
+              label: riskCategory.label,
+              data: [totalRisk],
+              backgroundColor: [riskCategory.color],
+            },
+          ],
+        },
+        options: {
+          indexAxis: 'y',
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: Math.max(totalRisk + 10, 100),
+            },
+          },
+          plugins: {
+            legend: {
+              display: true,
+              position: 'top',
+            },
+          },
+        },
+      });
+    </script>
   </body>
 </html>
