@@ -40,7 +40,21 @@ print_lock=Lock()
 
 import nmap
 
-import nmap
+vulnerability_messages = {
+        21: "Port 21 terbuka (FTP - File Transfer Protocol). Data ditransfer dalam teks biasa, memungkinkan sniffing kredensial. FTP tidak aman jika tidak dilengkapi dengan FTPS atau SFTP.",
+        22: "Port 22 terbuka (SSH - Secure Shell). Rentan terhadap serangan brute force jika password lemah. Periksa kekuatan password dan aktifkan key-based authentication.",
+        23: "Port 23 terbuka (Telnet). Semua data ditransfer tanpa enkripsi sehingga rentan sniffing dan serangan man-in-the-middle. Telnet sangat tidak disarankan digunakan.",
+        25: "Port 25 terbuka (SMTP - Simple Mail Transfer Protocol). Rentan terhadap abuse seperti spam relaying dan dapat digunakan untuk serangan phishing jika server tidak dikonfigurasi dengan benar.",
+        53: "Port 53 terbuka (DNS - Domain Name System). Rentan terhadap serangan DNS amplification yang dapat digunakan dalam DDoS dan cache poisoning.",
+        80: "Port 80 terbuka (HTTP - HyperText Transfer Protocol). Komunikasi tidak terenkripsi, memungkinkan sniffing data sensitif. Sebaiknya gunakan HTTPS di port 443.",
+        110: "Port 110 terbuka (POP3 - Post Office Protocol v3). Rentan terhadap sniffing karena data dikirim dalam teks biasa. Gunakan POP3S untuk enkripsi.",
+        143: "Port 143 terbuka (IMAP - Internet Message Access Protocol). Data tidak terenkripsi dan rentan terhadap sniffing. Gunakan IMAPS untuk meningkatkan keamanan.",
+        3306: "Port 3306 terbuka (MySQL Database). Rentan terhadap brute force dan ekspos data sensitif jika tidak diamankan dengan firewall atau enkripsi.",
+        3389: "Port 3389 terbuka (RDP - Remote Desktop Protocol). Rentan terhadap serangan brute force dan exploit jika tidak dikonfigurasi dengan benar. Sebaiknya gunakan VPN untuk akses.",
+        445: "Port 445 terbuka (SMB - Server Message Block). Rentan terhadap serangan seperti EternalBlue yang digunakan oleh ransomware seperti WannaCry.",
+        5900: "Port 5900 terbuka (VNC - Virtual Network Computing). Rentan terhadap brute force dan sniffing data. Gunakan enkripsi tambahan untuk melindungi akses remote.",
+        8080: "Port 8080 terbuka (HTTP Alternate). Rentan terhadap sniffing karena komunikasi tidak terenkripsi. Pastikan hanya digunakan untuk aplikasi non-sensitif."
+    }
 
 #scan IP
 def scanHost(ip, startPort, endPort):
@@ -59,6 +73,7 @@ def scanHost(ip, startPort, endPort):
         if scanner[ip].has_tcp(port):
             port_info = scanner[ip]['tcp'][port]
             if port_info['state'] == 'open':  # Only include ports that are open
+                message = vulnerability_messages.get(port, "")
                 open_ports.append({
                     "port": port,
                     "state": port_info['state'],
@@ -68,6 +83,7 @@ def scanHost(ip, startPort, endPort):
                     "version": port_info.get('version', 'unknown'),
                     "extrainfo": port_info.get('extrainfo', 'unknown'),
                     "conf": port_info['conf'],
+                    "message": message
                 })
 
     scan_result = {
@@ -134,7 +150,7 @@ def network_scan(target_ip):
     available_devices = [(received.psrc, received.hwsrc) for sent, received in result]
 
     # Prepare the scan result in the required dictionary format
-    scan_result = {
+    scan_result = {# dictionary (JSON)
         "type": "Scan Network",
         "network": target_ip,
         "available_devices": available_devices

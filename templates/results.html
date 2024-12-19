@@ -66,28 +66,28 @@
               <p class="text-blue-900 font-semibold">Paket TCP</p>
               <p class="text-gray-600">{{ result['tcp_packets_count'] }}</p>
               <small class="text-gray-500">Paket yang menggunakan protokol 
-                <a href="https://online.binus.ac.id/2021/09/24/tcp-ip-transmission-control-protocol-internet-protocol/" target="_blank" class="text-blue-600 hover:underline">protokol TCP</a>.
+                <a href="/tcp" target="_blank" class="text-blue-600 hover:underline">protokol TCP</a>.
               </small>
             </div>
             <div class="bg-blue-50 p-4 rounded shadow">
               <p class="text-blue-900 font-semibold">Paket UDP</p>
               <p class="text-gray-600">{{ result['udp_packets_count'] }}</p>
               <small class="text-gray-500">Paket yang menggunakan 
-                <a href="https://it.telkomuniversity.ac.id/udp-adalah/" target="_blank" class="text-blue-600 hover:underline">protokol UDP</a>.
+                <a href="/udp" target="_blank" class="text-blue-600 hover:underline">protokol UDP</a>.
               </small>
             </div>
             <div class="bg-blue-50 p-4 rounded shadow">
               <p class="text-blue-900 font-semibold">Paket ICMP</p>
               <p class="text-gray-600">{{ result['icmp_packets_count'] }}</p>
               <small class="text-gray-500">Paket yang menggunakan 
-                <a href="https://it.telkomuniversity.ac.id/icmp-adalah/" target="_blank" class="text-blue-600 hover:underline">protokol ICMP</a>.
+                <a href="/icmp" target="_blank" class="text-blue-600 hover:underline">protokol ICMP</a>.
               </small>
             </div>
             <div class="bg-blue-50 p-4 rounded shadow">
               <p class="text-blue-900 font-semibold">Paket HTTP</p>
               <p class="text-gray-600">{{ result['http_packets_count'] }}</p>
               <small class="text-gray-500">Permintaan dan respons 
-                <a href="https://it.telkomuniversity.ac.id/http-adalah/" target="_blank" class="text-blue-600 hover:underline">HTTP</a> terdeteksi.</small>
+                <a href="/http" target="_blank" class="text-blue-600 hover:underline">HTTP</a> terdeteksi.</small>
             </div>
             <div class="bg-blue-50 p-4 rounded shadow">
               <p class="text-blue-900 font-semibold">Paket Mencurigakan</p>
@@ -182,8 +182,6 @@
       // .filter(
       //   v => v.vulnerability_type !== "Unencrypted Traffic"
       // );
-      console.log(vulnerabilities); // Should print the array of vulnerabilities
-
 
       // Data for pie chart
       const labels = vulnerabilities.map(v => v.vulnerability_type);
@@ -249,9 +247,9 @@
           ],
         },
         options: {
-          indexAxis: 'y',
+          indexAxis: 'x',
           scales: {
-            x: {
+            y: {
               beginAtZero: true,
               max: Math.max(totalRisk + 10, 100),
             },

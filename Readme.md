@@ -5,3 +5,6 @@
 # 4.4 Testing (White box) nnti se pikir
 # 4.5 Pakai framework flask untuk deploy di local 127.0.0.1 
 
+NOTES:
+
+

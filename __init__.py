@@ -121,7 +121,23 @@ def create_app(test_config=None):
     def cara_export_pcap():
         return render_template('pcap-tutorial.html')
     
+    @app.route("/udp", methods=['GET'])
+    def udp():
+        return render_template('udp.html')
     
+    @app.route("/tcp", methods=['GET'])
+    def tcp():
+        return render_template('tcp.html')
+    
+    @app.route("/icmp", methods=['GET'])
+    def icmp():
+        return render_template('icmp.html')
+        
+    @app.route("/http", methods=['GET'])
+    def http():
+        return render_template('http.html')
+        
+
     @app.route('/details/<vulnerability_type>')
     def details(vulnerability_type):
         session_result = session.get('result', {})
