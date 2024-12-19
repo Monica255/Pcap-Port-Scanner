@@ -1,55 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pentesting Tool</title>
+    <title>Alat Pentesting</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-slate-100">
-    <div class="container mx-auto px-10 py-10">
-        <h1 class="text-3xl font-bold text-center text-blue-900">Pentesting Tool</h1>
-        <div class="flex flex-col items-center mt-10 space-y-10">
-            <!-- Pcap Scanner Section -->
-            <div class="w-full md:w-1/2 bg-white shadow-md rounded-lg p-6">
-                <h2 class="text-2xl font-bold text-blue-900">Pcap Scanner</h2>
-                <p class="text-gray-700 mt-2">
-                    Upload dan analisis file PCAP Anda untuk menemukan kerentanan jaringan.
+    <div class="flex">
+        <!-- Sidebar Menu -->
+        <aside class="w-64 bg-blue-900 text-white flex flex-col py-6 px-4 fixed h-full">
+            <h1 class="text-2xl font-bold mb-6">Pentesting Tool</h1>
+            <nav class="flex flex-col space-y-4">
+                <a href="#welcome" class="px-4 py-2 bg-blue-800 rounded-lg hover:bg-blue-800">Selamat Datang</a>
+                <a href="/pcap-home" class="px-4 py-2 bg-blue-700 rounded-lg hover:bg-blue-800">Pcap Scanner</a>
+                <a href="/port-home" class="px-4 py-2 bg-blue-700 rounded-lg hover:bg-blue-800">Port Scanner</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-10 ml-64">
+            <!-- Welcome Page -->
+            <section id="welcome" class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-2xl font-bold text-blue-900">Selamat Datang</h2>
+                <p class="text-gray-700 mt-4">
+                    Selamat datang di Pentesting Tool! Platform ini dirancang untuk membantu Anda menganalisis dan meningkatkan keamanan jaringan. Dengan alat seperti Pcap Scanner untuk menganalisis file PCAP dan Port Scanner untuk memeriksa port terbuka, Anda dapat mengidentifikasi potensi kerentanan dan mengambil langkah preventif untuk melindungi sistem Anda.
                 </p>
-                <a href="/pcap" class="mt-4 px-6 py-3 bg-blue-700 text-white rounded-lg shadow-md hover:bg-blue-800 inline-block">
-                    Mulai Pcap Scanner
-                </a>
-                <div class="mt-6 flex items-center space-x-4">
-                    <img src="/static/wireshark-logo.png" alt="Wireshark Logo" class="w-16 h-16">
-                    <!-- <a href="/udp" class="text-blue-700 font-medium hover:underline">
-                        TCP
-                    </a>
-                    <a href="/tcp" class="text-blue-700 font-medium hover:underline">
-                        UDP
-                    </a>
-                    <a href="/icmp" class="text-blue-700 font-medium hover:underline">
-                        ICMP
-                    </a>
-                    <a href="/http" class="text-blue-700 font-medium hover:underline">
-                        HTTP
-                    </a> -->
-                    <a href="/cara-export-pcap" class="text-blue-700 font-medium hover:underline">
-                        Cara export file PCAP dengan Wireshark
-                    </a>
+                <div class="mt-6 flex justify-center">
+                    <img src="/static/pentesting.png" alt="Ilustrasi Keamanan Jaringan" class="w-2/3 rounded-lg shadow-lg">
                 </div>
-            </div>
-            
-            <!-- Port Scanner Section -->
-            <div class="w-full md:w-1/2 bg-white shadow-md rounded-lg p-6">
-                <h2 class="text-2xl font-bold text-blue-900">Port Scanner</h2>
-                <p class="text-gray-700 mt-2">
-                    Lakukan pemindaian port untuk mengidentifikasi port yang terbuka dan layanan yang berjalan.
+                <p class="text-gray-700 mt-4">
+                    Dengan alat kami, Anda dapat:
                 </p>
-                <a href="/port" class="mt-4 px-6 py-3 bg-blue-700 text-white rounded-lg shadow-md hover:bg-blue-800 inline-block">
-                    Mulai Port Scanner
-                </a>
-            </div>
-        </div>
+                <ul class="list-disc list-inside text-gray-700 mt-2">
+                    <li><strong>Pcap Scanner:</strong> Menganalisis file tangkapan paket (PCAP) jaringan Anda untuk mendeteksi potensi masalah.</li>
+                    <li><strong>Port Scanner:</strong> Mengidentifikasi port terbuka di jaringan Anda untuk melihat celah serangan siber.</li>
+                </ul>
+                <p class="text-gray-700 mt-4">
+                    Mulailah mengamankan sistem Anda sekarang dengan menjelajahi alat-alat di menu.
+                </p>
+            </section>
+
+            <!-- Port Scanner Section -->
+            <section id="port" class="mt-10 bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-2xl font-bold text-blue-900">Apa itu Pentesting Tool?</h2>
+                <p class="text-gray-700 mt-4">
+                    Pentesting Tool adalah komponen penting bagi profesional keamanan siber, memungkinkan mereka untuk menilai kekuatan jaringan mereka terhadap potensi ancaman. Alat-alat ini mensimulasikan serangan dunia nyata untuk mengidentifikasi kelemahan dan memastikan langkah-langkah proaktif dapat diterapkan.
+                </p>
+                <div class="mt-6 flex justify-center">
+                    <img src="/static/pentesting-tools.png" alt="Ilustrasi Alat Pentesting" class="w-2/3 rounded-lg shadow-lg">
+                </div>
+                <p class="text-gray-700 mt-4">
+                    Dengan memanfaatkan alat seperti analisis paket, pemindai kerentanan, dan pemetaan port, pentesting meningkatkan ketahanan jaringan Anda, memberikan pemahaman yang jelas tentang potensi eksploitasi dan cara mengatasinya secara efektif.
+                </p>
+                <p class="text-gray-700 mt-4">
+                    Jelajahi rangkaian tools untuk memulai perjalanan Anda menuju lingkungan jaringan yang aman.
+                </p>
+            </section>
+        </main>
     </div>
 </body>
 </html>

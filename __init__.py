@@ -113,9 +113,17 @@ def create_app(test_config=None):
     def pcap():
         return render_template('pcap.html')
     
+    @app.route("/pcap-home", methods=['GET'])
+    def pcap_home():
+        return render_template('pcap-home.html')
+    
     @app.route("/port", methods=['GET'])
     def port():
         return render_template('port.html')
+    
+    @app.route("/port-home", methods=['GET'])
+    def port_home():
+        return render_template('port-home.html')
     
     @app.route("/cara-export-pcap", methods=['GET'])
     def cara_export_pcap():
