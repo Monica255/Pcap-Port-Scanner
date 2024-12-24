@@ -79,7 +79,7 @@ def create_app(test_config=None):
         result = scanHost(target_ip, start_port, end_port)
         
         # Save the result in session to display on another page
-        session['scan_result'] = result
+        session['result'] = result
         
         return render_template('scan_result.html', result=result)
     
@@ -88,14 +88,15 @@ def create_app(test_config=None):
         print(request.form)
         # Get the form data from the request
         target_ip = request.form.get('network')
-        print("target")
-        print(target_ip)
+        start_port = int(request.form.get('start-port'))
+        end_port = int(request.form.get('end-port'))
         
         # Start scanning in a separate thread to avoid blocking
-        result = network_scan(target_ip)
+        # result = network_scan(target_ip)
+        result = network_scan_and_port_scan(target_ip, start_port, end_port)
         
         # Save the result in session to display on another page
-        session['scan_result'] = result
+        session['result'] = result
         
         return render_template('network_result.html', result=result)
 
@@ -158,6 +159,21 @@ def create_app(test_config=None):
                 break
 
         return render_template('details.html', details=vulnerability_details, vulnerability_type=vulnerability_type)
+
+    @app.route('/networkport/<ip>')
+    def networkport(ip):
+        session_result = session.get('scan_result', {})
+        # print(session_result)
+        devices = session_result.get('available_devices', [])
+        open_ports = []
+        # print(ip)
+        # print(devices)
+        for d in devices:
+            if d['ip'] == ip:
+                open_ports = d['open_ports']
+                break
+
+        return render_template('network-port.html', open_ports=open_ports, ip=ip)
 
 
     def allowed_file(filename):

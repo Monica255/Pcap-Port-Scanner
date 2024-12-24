@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PCAP Analysis Results</title>
+    <title>Hasil Deteksi pada File PCAP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
@@ -12,15 +12,15 @@
       <div class="bg-white rounded-lg shadow-lg p-8">
         <!-- Header Section -->
         <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 pb-3 border-blue-900">
-          PCAP Analysis Results
+          Hasil Deteksi pada File PCAP
         </h1>
         <p class="text-sm text-gray-500 mb-6">
-          Berikut rincian dan temuan dari berkas PCAP yang dianalisis.
+          Berikut rincian dan temuan dari berkas PCAP yang diunggah.
         </p>
 
         <!-- Summary Section -->
         <div class="mb-8">
-          <h2 class="text-2xl font-semibold text-blue-900 mb-4">File Details</h2>
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Detail File</h2>
           <div class="overflow-x-auto">
             <table class="table-auto w-full text-sm text-left text-gray-600">
               <tbody>
@@ -57,7 +57,7 @@
 
         <!-- Packet Counts Section -->
         <div class="mb-8">
-          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Packet Analysis</h2>
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Paket</h2>
           <p class="text-sm text-gray-500 mb-4">
             Bagian ini memberikan rincian berbagai jenis paket yang terdeteksi selama analisis.
           </p>
@@ -105,7 +105,7 @@
         <!-- Vulnerabilities Section -->
         <!-- Vulnerabilities Section -->
         <div>
-          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Vulnerabilities Overview</h2>
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Ringkasan Kerentanan</h2>
           <p class="text-sm text-gray-500 mb-4">
             Berikut adalah rekapitulasi hasil deteksi kerentanan:
           </p>
@@ -119,7 +119,7 @@
               <canvas id="riskScaleChart" width="300" height="300"></canvas>
             </div>
           </div>
-          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Vulnerabilities List</h2>
+          <h2 class="text-2xl font-semibold text-blue-900 mb-4">Daftar Kerentanan</h2>
           <p class="text-sm text-gray-500 mb-4">
             Kerentanan berikut terdeteksi selama analisis:
           </p>
@@ -128,13 +128,13 @@
               <thead>
                 <tr class="bg-gray-50">
                   <th class="px-4 py-3 border-b font-medium text-gray-700">
-                    Vulnerability Type
+                    Type Kerentanan
                   </th>
                   <th class="px-4 py-3 border-b font-medium text-gray-700">
-                    Number Of Detected
+                    Jumlah Terdeteksi
                   </th>
                   <th class="px-4 py-3 border-b font-medium text-gray-700">
-                    Description
+                    Deskripsi
                   </th>
                 </tr>
               </thead>
@@ -164,7 +164,7 @@
                 {% else %}
                 <tr>
                   <td colspan="3" class="text-center py-4 text-gray-500">
-                    No vulnerabilities detected.
+                    Tidak ada kerentanan terdeteksi.
                   </td>
                 </tr>
                 {% endif %}

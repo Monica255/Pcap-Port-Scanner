@@ -71,15 +71,15 @@ def analyze_pcap(pcap_file):
     # - DDoS
     # - Unencrypted packets
     # - SQL injection
-    # - weak credential
-    # - NXDomain
-    # - phishing
+    # - Bruteforce
+    # - Arp spoofing
+    # - Port Scanning
     UP = detect_unencrypted_traffic(pcap_file)
     vulnerabilities = []
     ddos = detect_ddos(pcap_file)
     SQL = detect_sql_injection(pcap_file)
     # WC = detect_weak_credentials(pcap_file)
-    NXD = detect_nxdomain(pcap_file)
+    # NXD = detect_nxdomain(pcap_file)
     # phishing = detect_hidden_characters_in_domains(pcap_file)
     bf = detect_brute_force(pcap_file)
     arp = detect_arp_spoofing(pcap_file)
@@ -88,7 +88,7 @@ def analyze_pcap(pcap_file):
     vulnerabilities.append(ddos)
     vulnerabilities.append(SQL)
     # vulnerabilities.append(WC)
-    vulnerabilities.append(NXD)
+    # vulnerabilities.append(NXD)
     # vulnerabilities.append(phishing)
     vulnerabilities.append(bf)
     vulnerabilities.append(arp)
