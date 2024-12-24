@@ -74,6 +74,7 @@ def analyze_pcap(pcap_file):
     # - Bruteforce
     # - Arp spoofing
     # - Port Scanning
+    # - DeAuth
     UP = detect_unencrypted_traffic(pcap_file)
     vulnerabilities = []
     ddos = detect_ddos(pcap_file)
@@ -84,6 +85,7 @@ def analyze_pcap(pcap_file):
     bf = detect_brute_force(pcap_file)
     arp = detect_arp_spoofing(pcap_file)
     port_scan = detect_port_scanning(pcap_file)
+    DA = detect_deauth_attack(pcap_file)
 
     vulnerabilities.append(ddos)
     vulnerabilities.append(SQL)
@@ -93,6 +95,7 @@ def analyze_pcap(pcap_file):
     vulnerabilities.append(bf)
     vulnerabilities.append(arp)
     vulnerabilities.append(port_scan)
+    vulnerabilities.append(DA)
 
     my_list = [item for item in vulnerabilities if item['number_of_detected'] != 0]
 
