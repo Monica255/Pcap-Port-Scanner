@@ -32,14 +32,6 @@
                   <td class="px-4 py-2">{{ result['subnet'] }}</td>
                 </tr>
                 <tr class="bg-gray-50">
-                  <th class="px-4 py-2 font-medium text-gray-700">Port Awal</th>
-                  <td class="px-4 py-2">{{ result['start_port'] }}</td>
-                </tr>
-                <tr>
-                  <th class="px-4 py-2 font-medium text-gray-700">Port Akhir</th>
-                  <td class="px-4 py-2">{{ result['end_port'] }}</td>
-                </tr>
-                <tr class="bg-gray-50">
                   <th class="px-4 py-2 font-medium text-gray-700">Jumlah Perangkat</th>
                   <td class="px-4 py-2">{{ result['number_of_devices'] }}</td>
                 </tr>
@@ -62,23 +54,14 @@
                 <tr class="bg-gray-50">
                   <th class="px-4 py-3 border-b font-medium text-gray-700">Alamat IP</th>
                   <th class="px-4 py-3 border-b font-medium text-gray-700">Alamat MAC</th>
-                  <th class="px-4 py-3 border-b font-medium text-gray-700">Jumlah Port Terbuka</th>
+                  <!-- <th class="px-4 py-3 border-b font-medium text-gray-700">Jumlah Port Terbuka</th> -->
                 </tr>
               </thead>
               <tbody>
                 {% for device in result['available_devices'] %}
                 <tr>
-                  <td class="px-4 py-2 border">{{ device['ip'] }}</td>
-                  <td class="px-4 py-2 border">{{ device['mac'] }}</td>
-                  <td class="px-4 py-2 border">
-                    {% if device['open_ports'] %}
-                    <a  href="{{ url_for('networkport', ip=device['ip']) }}" class="text-blue-500 hover:text-blue-700">
-                      {{ device['open_ports'] | length }} Port Terbuka
-                    </a>
-                    {% else %}
-                    Tidak ada port terbuka
-                    {% endif %}
-                  </td>
+                  <td class="px-4 py-2 border">{{ device[0] }}</td>
+                  <td class="px-4 py-2 border">{{ device[1] }}</td>
                 </tr>
                 {% endfor %}
               </tbody>

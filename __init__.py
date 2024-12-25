@@ -65,20 +65,16 @@ def create_app(test_config=None):
 
     @app.route("/scan-port", methods=['POST'])
     def scan_port():
-        # Get the form data from the request
         target_ip = request.form.get('target')
         start_port = int(request.form.get('start-port'))
         end_port = int(request.form.get('end-port'))
         
-        # Validate input
         if not target_ip or start_port < 0 or end_port < 0 or start_port > 65535 or end_port > 65535 or start_port > end_port:
             error = "Invalid input. Please ensure the IP address and port range are correct."
             return render_template('index.html', error=error)
         
-        # Start scanning in a separate thread to avoid blocking
         result = scanHost(target_ip, start_port, end_port)
-        
-        # Save the result in session to display on another page
+    
         session['result'] = result
         
         return render_template('scan_result.html', result=result)
@@ -86,16 +82,9 @@ def create_app(test_config=None):
     @app.route("/scan-network", methods=['POST'])
     def scan_network():
         print(request.form)
-        # Get the form data from the request
         target_ip = request.form.get('network')
-        start_port = int(request.form.get('start-port'))
-        end_port = int(request.form.get('end-port'))
-        
-        # Start scanning in a separate thread to avoid blocking
-        # result = network_scan(target_ip)
-        result = network_scan_and_port_scan(target_ip, start_port, end_port)
-        
-        # Save the result in session to display on another page
+        result = network_scan(target_ip)
+    
         session['result'] = result
         
         return render_template('network_result.html', result=result)
@@ -159,22 +148,6 @@ def create_app(test_config=None):
                 break
 
         return render_template('details.html', details=vulnerability_details, vulnerability_type=vulnerability_type)
-
-    @app.route('/networkport/<ip>')
-    def networkport(ip):
-        session_result = session.get('scan_result', {})
-        # print(session_result)
-        devices = session_result.get('available_devices', [])
-        open_ports = []
-        # print(ip)
-        # print(devices)
-        for d in devices:
-            if d['ip'] == ip:
-                open_ports = d['open_ports']
-                break
-
-        return render_template('network-port.html', open_ports=open_ports, ip=ip)
-
 
     def allowed_file(filename):
         allowed_extensions = {'pcap', 'pcapng'}

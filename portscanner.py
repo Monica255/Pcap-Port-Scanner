@@ -115,12 +115,6 @@ def scanPort(ip, startPort, endPort):
     except Exception as e:
         print(f"[!] Error during scan: {e}")
         return []
-    # {
-    #         "type": "Scan Host",
-    #         "ip_address": ip,
-    #         "open_ports": [],
-    #         "error": str(e)
-    #     }
 
     if ip not in scanner.all_hosts():
         print(f"[!] Host {ip} not found in scan results. It may be offline or unreachable.")
@@ -153,11 +147,10 @@ def scanPort(ip, startPort, endPort):
     print(f"[+] TCP scan on host {ip} complete")
     return open_ports
 
-def network_scan_and_port_scan(subnet, startPort=20, endPort=100):
+def network_scan(subnet):
     """
     Scans the specified subnet for devices and optionally scans each device for open ports.
     """
-    print(f"[*] Scanning subnet {subnet} for active devices... {startPort} - {endPort}")
     arp = ARP(pdst=subnet)
     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
     packet = ether / arp
@@ -167,11 +160,9 @@ def network_scan_and_port_scan(subnet, startPort=20, endPort=100):
     except Exception as e:
         print(f"[!] Error during ARP scan: {e}")
         return {
-            "type": "Subnet Scan and Port Scan",
+            "type": "Subnet Scan",
             "subnet": subnet,
             "number_of_devices":len(available_devices),
-            "start_port": startPort,
-            "end_port": endPort,
             "available_devices": [],
             "error": str(e)
         }
@@ -183,24 +174,11 @@ def network_scan_and_port_scan(subnet, startPort=20, endPort=100):
 
     print(f"[*] Subnet scan complete. {len(available_devices)} device(s) found.")
 
-    scanned_results = []
-    for ip, mac in available_devices:
-        print(f"[*] Scanning {ip} for open ports...")
-        open_ports = scanPort(ip, startPort, endPort)
-        scanned_results.append({
-            "ip": ip,
-            "mac": mac,
-            "open_ports": open_ports
-        })
-
-    # Organize results into a JSON-like dictionary
     scan_result = {
-        "type": "Subnet Scan and Port Scan",
+        "type": "Pemindaian Subnet",
         "subnet": subnet,
         "number_of_devices":len(available_devices),
-        "start_port": startPort,
-        "end_port": endPort,
-        "available_devices": scanned_results
+        "available_devices":available_devices
     }
 
     print("[+] Full scan complete.")
@@ -212,7 +190,7 @@ def network_scan_and_port_scan(subnet, startPort=20, endPort=100):
 if __name__ == "__main__":
     # Replace '192.168.1.0/24' with your desired subnet
     subnet = "192.168.1.1/24"
-    result = network_scan_and_port_scan(subnet, startPort=80, endPort=100)
+    result = network_scan(subnet)
     # result = scanHost("192.168.1.31",4999,5010)
     print(result)
 
