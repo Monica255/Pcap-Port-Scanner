@@ -7,4 +7,10 @@
 
 NOTES:
 
+1. jelasin CVE dan CVSS di tinjauan pustaka (panjangin jgn cuma 2 kalimat. jelasin juga metrics2nya)
+2. Ada file baru namanya cvss_calc.py untuk hitung cve v3.0 score (jelasin kodenya tanya gpt hehe)
+3. ss ulang kode vulneravility karena ada tambahan deteksi cve nya
+4. se ada tambah detect_ssh_brute_force_attack tp dak tau btul dk karna dk punya file pcap
+5. ss ulang tampilan web nya bagian hasil file pcap karna ada tambahan cve score dan level. tambah juga penjelasannya. 
+
 
