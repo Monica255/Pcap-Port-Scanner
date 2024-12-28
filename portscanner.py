@@ -30,26 +30,27 @@ def scanHost(ip, startPort, endPort):
     print('[*] Starting TCP port scan on host %s' % ip)
 
     scanner = nmap.PortScanner()
-
     scanner.scan(ip, f"{startPort}-{endPort}")
 
     open_ports = []
     for port in range(startPort, endPort + 1):
-        if scanner[ip].has_tcp(port):
-            port_info = scanner[ip]['tcp'][port]
-            if port_info['state'] == 'open':  # Only include ports that are open
+        try:
+            if scanner[ip]['tcp'][port]['state'] == 'open':  # Check if the port is open
+                port_info = scanner[ip]['tcp'][port]
                 message = vulnerability_messages.get(port, "")
                 open_ports.append({
                     "port": port,
                     "state": port_info['state'],
-                    "name": port_info['name'],
-                    "reason": port_info['reason'],
+                    "name": port_info.get('name', 'unknown'),
+                    "reason": port_info.get('reason', 'unknown'),
                     "product": port_info.get('product', 'unknown'),
                     "version": port_info.get('version', 'unknown'),
                     "extrainfo": port_info.get('extrainfo', 'unknown'),
-                    "conf": port_info['conf'],
+                    "conf": port_info.get('conf', 0),
                     "message": message
                 })
+        except KeyError:
+            continue  # Skip if port information is not available
 
     scan_result = {
         "type": "Scan Host",
@@ -62,90 +63,9 @@ def scanHost(ip, startPort, endPort):
     print('[+] TCP scan on host %s complete' % ip)
     return scan_result
 
-# def tcp_scan(ip, startPort, endPort):
-#     """ Creates a TCP socket and attempts to connect via supplied ports. """
-#     open_ports = []
-#     for port in range(startPort, endPort + 1):
-#         try:
-#             tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-#             tcp.settimeout(1)  
-
-#             if tcp.connect_ex((ip, port)) == 0:  
-#                 open_ports.append(port)
-#                 print(f'[+] {ip}:{port}/TCP Open')
-
-#         except Exception as e:
-#             print(f"Error scanning port {port} on {ip}: {e}")
-#     return open_ports
-
-from scapy.all import ARP, Ether, srp
-
-#scan network 
-# def network_scan(target_ip):
-#     arp = ARP(pdst=target_ip)
-#     ether = Ether(dst="ff:ff:ff:ff:ff:ff")
-#     packet = ether/arp
-    
-#     result = srp(packet, timeout=3, verbose=0)[0]
-
-#     available_devices = [(received.psrc, received.hwsrc) for sent, received in result]
-
-#     scan_result = {
-#         "type": "Scan Network",
-#         "network": target_ip,
-#         "available_devices": available_devices
-#     }
-
-#     print(scan_result)
-#     return scan_result
 
 from scapy.all import ARP, Ether, srp
 import nmap
-
-def scanPort(ip, startPort, endPort):
-    """
-    Scans the specified IP address for open TCP ports in the given range.
-    """
-    print(f"[*] Starting TCP port scan on host {ip}")
-
-    scanner = nmap.PortScanner()
-
-    try:
-        scanner.scan(ip, f"{startPort}-{endPort}")
-    except Exception as e:
-        print(f"[!] Error during scan: {e}")
-        return []
-
-    if ip not in scanner.all_hosts():
-        print(f"[!] Host {ip} not found in scan results. It may be offline or unreachable.")
-        return []
-
-    open_ports = []
-
-    for port in range(startPort, endPort + 1):
-        try:
-            if scanner[ip].has_tcp(port):
-                port_info = scanner[ip]['tcp'][port]
-                if port_info['state'] == 'open':
-                    message = vulnerability_messages.get(port, "")
-                    open_ports.append({
-                        "port": port,
-                        "state": port_info['state'],
-                        "name": port_info['name'],
-                        "reason": port_info['reason'],
-                        "product": port_info.get('product', 'unknown'),
-                        "version": port_info.get('version', 'unknown'),
-                        "extrainfo": port_info.get('extrainfo', 'unknown'),
-                        "conf": port_info['conf'],
-                        "message": message
-                    })
-        except KeyError:
-            print(f"[!] Port {port} data not found in scan results.")
-        except Exception as e:
-            print(f"[!] Unexpected error for port {port}: {e}")
-
-    print(f"[+] TCP scan on host {ip} complete")
-    return open_ports
 
 def network_scan(subnet):
     """
@@ -160,11 +80,20 @@ def network_scan(subnet):
     except Exception as e:
         print(f"[!] Error during ARP scan: {e}")
         return {
-            "type": "Subnet Scan",
+            "type": "Pemindaian Subnet",
             "subnet": subnet,
-            "number_of_devices":len(available_devices),
+            "number_of_devices": 0,
             "available_devices": [],
             "error": str(e)
+        }
+
+    if not result:  # Check if result is empty
+        print("[*] No devices found on the subnet.")
+        return {
+            "type": "Pemindaian Subnet",
+            "subnet": subnet,
+            "number_of_devices": 0,
+            "available_devices": []
         }
 
     available_devices = []
@@ -177,13 +106,11 @@ def network_scan(subnet):
     scan_result = {
         "type": "Pemindaian Subnet",
         "subnet": subnet,
-        "number_of_devices":len(available_devices),
-        "available_devices":available_devices
+        "number_of_devices": len(available_devices),
+        "available_devices": available_devices
     }
 
-    print("[+] Full scan complete.")
     return scan_result
-
 
 
 # Example Usage
