@@ -4,7 +4,6 @@ from scapy.all import IP, TCP, rdpcap
 import re
 from vulnerability_scanner import detect_sql_injection
 
-# Fungsi untuk membuat paket TCP/IP palsu
 def create_mock_tcp_packets(packet_data):
     packets = []
     for data in packet_data:
@@ -15,12 +14,10 @@ def create_mock_tcp_packets(packet_data):
         packets.append(packet)
     return packets
 
-# White-box testing untuk fungsi detect_sql_injection
 class TestDetectSQLInjection(unittest.TestCase):
     @patch('vulnerability_scanner.rdpcap')  
     def test_sql_injection_detected(self, mock_rdpcap):
 
-        # Mock file PCAP dengan pola SQL Injection
         packet_data = [
             {
                 'ip_sumber': '192.168.1.10',
@@ -33,10 +30,8 @@ class TestDetectSQLInjection(unittest.TestCase):
         mock_packets = create_mock_tcp_packets(packet_data)
         mock_rdpcap.return_value = mock_packets
 
-        # Jalankan fungsi
         result = detect_sql_injection('mock_file.pcap')
 
-        # Validasi hasil
         self.assertEqual(result['number_of_detected'], 1)
         self.assertEqual(len(result['details']), 1)
         self.assertEqual(result['details'][0]['ip_sumber'], '192.168.1.10')
@@ -45,7 +40,6 @@ class TestDetectSQLInjection(unittest.TestCase):
     @patch('vulnerability_scanner.rdpcap') 
     def test_no_sql_injection_detected(self, mock_rdpcap):
 
-        # Mock file PCAP tanpa pola SQL Injection
         packet_data = [
             {
                 'ip_sumber': '192.168.1.10',
@@ -58,10 +52,8 @@ class TestDetectSQLInjection(unittest.TestCase):
         mock_packets = create_mock_tcp_packets(packet_data)
         mock_rdpcap.return_value = mock_packets
 
-        # Jalankan fungsi
         result = detect_sql_injection('mock_file.pcap')
 
-        # Validasi hasil
         self.assertEqual(result['number_of_detected'], 0)
         self.assertEqual(len(result['details']), 0)
 

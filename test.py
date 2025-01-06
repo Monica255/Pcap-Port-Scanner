@@ -139,7 +139,6 @@ def detect_hidden_characters_in_domains(pcap_file):
     detected_hidden_characters = []
 
     for packet in packets:
-        # Check for DNS query requests
         if packet.haslayer(DNSQR):
             domain_name = packet[DNSQR].qname.decode('utf-8')
             if has_hidden_characters(domain_name):
@@ -150,14 +149,11 @@ def detect_hidden_characters_in_domains(pcap_file):
                     'protokol': 'DNS'
                 })
 
-        # Check for HTTP/HTTPS traffic containing domain names in the payload
         if packet.haslayer(TCP):
             if packet[TCP].dport in [80, 443] or packet[TCP].sport in [80, 443]:
                 raw_data = bytes(packet[TCP].payload)
                 try:
-                    # Attempt to decode the payload as a UTF-8 string
                     data = raw_data.decode('utf-8')
-                    # Extract domain names from the payload (typically in Host header)
                     host_matches = re.findall(r'Host: ([^\s]+)', data)
                     for host in host_matches:
                         if has_hidden_characters(host):
@@ -191,7 +187,6 @@ def detect_nxdomain(pcap_file):
     packets = rdpcap(pcap_file)
     nxdomain_info = []
 
-    # Analyze each packet
     for packet in packets:
         if packet.haslayer(DNS) and packet[DNS].qr == 1:
             dns_layer = packet[DNS]
@@ -324,16 +319,12 @@ def detect_unencrypted_traffic(pcap_file):
         'vulnerability_type':'Unencrypted Traffic',
         'message':'Unencrypted Traffic adalah data jaringan yang dikirim tanpa enkripsi, sehingga tetap dalam bentuk teks yang dapat dibaca dan rentan disadap, dianalisis, atau dicuri oleh pihak yang tidak berwenang.',
         'number_of_detected': len(detected_packets),
-        # 'details': detected_packets
     }
-
     return result
-
 
 from scapy.all import rdpcap, TCP, IP
 import time
 from cvss_calc import get_cvss_base_score
-
 
 def detect_ssh_brute_force_attack(pcap_file):
     packets = rdpcap(pcap_file)
@@ -381,3 +372,51 @@ def detect_ssh_brute_force_attack(pcap_file):
 # print(result)
 
 
+
+from scapy.all import ARP, Ether, srp
+import nmap
+
+def scanPort(ip, startPort, endPort):
+    """
+    Scans the specified IP address for open TCP ports in the given range.
+    """
+    print(f"[*] Starting TCP port scan on host {ip}")
+
+    scanner = nmap.PortScanner()
+
+    try:
+        scanner.scan(ip, f"{startPort}-{endPort}")
+    except Exception as e:
+        print(f"[!] Error during scan: {e}")
+        return []
+
+    if ip not in scanner.all_hosts():
+        print(f"[!] Host {ip} not found in scan results. It may be offline or unreachable.")
+        return []
+
+    open_ports = []
+
+    for port in range(startPort, endPort + 1):
+        try:
+            if scanner[ip].has_tcp(port):
+                port_info = scanner[ip]['tcp'][port]
+                if port_info['state'] == 'open':
+                    message = vulnerability_messages.get(port, "")
+                    open_ports.append({
+                        "port": port,
+                        "state": port_info['state'],
+                        "name": port_info['name'],
+                        "reason": port_info['reason'],
+                        "product": port_info.get('product', 'unknown'),
+                        "version": port_info.get('version', 'unknown'),
+                        "extrainfo": port_info.get('extrainfo', 'unknown'),
+                        "conf": port_info['conf'],
+                        "message": message
+                    })
+        except KeyError:
+            print(f"[!] Port {port} data not found in scan results.")
+        except Exception as e:
+            print(f"[!] Unexpected error for port {port}: {e}")
+
+    print(f"[+] TCP scan on host {ip} complete")
+    return open_ports

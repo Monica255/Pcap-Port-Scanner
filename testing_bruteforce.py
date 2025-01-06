@@ -16,7 +16,6 @@ class TestNetworkAnalysis(unittest.TestCase):
     @patch('vulnerability_scanner.rdpcap')
     def test_brute_force_detected(self, mock_rdpcap):
 
-        # Simulating a case with more than 100 attempts (threshold is 100)
         mock_packets = create_mock_tcp_packets([
             {'ip_sumber': '10.0.0.1', 'port_sumber': 12345, 'ip_tujuan': '192.168.1.1', 'port_tujuan': 22},
         ] * 120) 
@@ -30,7 +29,6 @@ class TestNetworkAnalysis(unittest.TestCase):
     @patch('vulnerability_scanner.rdpcap')
     def test_no_brute_force_detected(self, mock_rdpcap):
 
-        # Simulating a case with less than 100 attempts (threshold is 100)
         mock_packets = create_mock_tcp_packets([
             {'ip_sumber': '10.0.0.1', 'port_sumber': 12345, 'ip_tujuan': '192.168.1.1', 'port_tujuan': 22}
         ] * 80)  

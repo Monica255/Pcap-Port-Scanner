@@ -4,7 +4,6 @@ from scapy.all import IP, rdpcap
 from collections import defaultdict
 from vulnerability_scanner import detect_ddos
 
-# Fungsi untuk membuat paket IP palsu
 def create_mock_packets(dest_ip_counts, src_ips_per_dest):
     packets = []
     for dest_ip, count in dest_ip_counts.items():
@@ -13,21 +12,17 @@ def create_mock_packets(dest_ip_counts, src_ips_per_dest):
             packets.append(packet)
     return packets
 
-# White-box testing untuk fungsi detect_ddos
 class TestDetectDDOS(unittest.TestCase):
     @patch('vulnerability_scanner.rdpcap') 
     def test_ddos_detected(self, mock_rdpcap):
 
-        # Mock file PCAP dengan DDoS (lebih dari 1000 paket)
         dest_ip_counts = {'192.168.1.1': 1200}
         src_ips_per_dest = {'192.168.1.1': ['10.0.0.1', '10.0.0.2', '10.0.0.3']}
         mock_packets = create_mock_packets(dest_ip_counts, src_ips_per_dest)
         mock_rdpcap.return_value = mock_packets
 
-        # Jalankan fungsi
         result = detect_ddos('mock_file.pcap')
 
-        # Validasi hasil
         self.assertEqual(result['number_of_detected'], 1)
         self.assertEqual(len(result['details']), 1)
         self.assertEqual(result['details'][0]['ip_tujuan'], '192.168.1.1')
@@ -37,16 +32,13 @@ class TestDetectDDOS(unittest.TestCase):
     @patch('vulnerability_scanner.rdpcap')
     def test_no_ddos_detected(self, mock_rdpcap):
 
-        # Mock file PCAP tanpa DDoS (kurang dari atau sama dengan 1000 paket)
         dest_ip_counts = {'192.168.1.1': 800, '192.168.1.2': 900}
         src_ips_per_dest = {'192.168.1.1': ['10.0.0.1'], '192.168.1.2': ['10.0.0.2']}
         mock_packets = create_mock_packets(dest_ip_counts, src_ips_per_dest)
         mock_rdpcap.return_value = mock_packets
 
-        # Jalankan fungsi
         result = detect_ddos('mock_file.pcap')
 
-        # Validasi hasil
         self.assertEqual(result['number_of_detected'], 0)
         self.assertEqual(len(result['details']), 0)
 

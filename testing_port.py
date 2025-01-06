@@ -3,7 +3,6 @@ from unittest.mock import patch, MagicMock
 from portscanner import scanHost, network_scan, vulnerability_messages
 
 class TestNetworkScan(unittest.TestCase):
-    
     @patch('nmap.PortScanner')
     def test_scanHost_open_ports(self, MockPortScanner):
         mock_scanner = MagicMock()
@@ -12,7 +11,8 @@ class TestNetworkScan(unittest.TestCase):
         mock_scanner.scan.return_value = None
         mock_scanner.__getitem__.return_value = {
             'tcp': {
-                80: {'state': 'open', 'name': 'http', 'reason': 'syn-ack', 'product': 'Apache', 'version': '2.4.29', 'extrainfo': 'unix', 'conf': 10}
+                80: {'state': 'open', 'name': 'http', 'reason': 'syn-ack', 
+                     'product': 'Apache', 'version': '2.4.29', 'extrainfo': 'unix', 'conf': 10}
             }
         }
 
@@ -43,8 +43,10 @@ class TestNetworkScan(unittest.TestCase):
         self.assertEqual(result['ip_address'], '192.168.1.1')
         self.assertEqual(len(result['open_ports']), 0)
 
+if __name__ == '__main__':
+    unittest.main()
 
-    # @patch('scapy.sendrecv.srp')
+# @patch('scapy.sendrecv.srp')
     # def test_network_scan_two_devices(self, mock_srp):
     #     # Mock the srp function to simulate two devices
     #     mock_srp.return_value = [
@@ -84,6 +86,3 @@ class TestNetworkScan(unittest.TestCase):
     #     self.assertEqual(result['subnet'], '192.168.1.0/24')
     #     self.assertEqual(result['number_of_devices'], 0)
     #     self.assertEqual(len(result['available_devices']), 0)
-
-if __name__ == '__main__':
-    unittest.main()

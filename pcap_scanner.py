@@ -24,9 +24,25 @@ def filter_packets_by_ip_range(packets, start_ip, end_ip):
 def filter_packets_by_protocol(packets, protocol):
     return [p for p in packets if p.haslayer(protocol)]
 
+# def parse_dns_packets(packets):
+#     dns_packets = [p for p in packets if DNS in p]
+#     return [p[DNS].qd.qname.decode('utf-8') for p in dns_packets]
+
 def parse_dns_packets(packets):
     dns_packets = [p for p in packets if DNS in p]
-    return [p[DNS].qd.qname.decode('utf-8') for p in dns_packets]
+    domain_names = []
+
+    for p in dns_packets:
+        try:
+            if p[DNS].qd:  # Check if 'qd' field exists
+                domain_names.append(p[DNS].qd.qname.decode('utf-8'))
+        except AttributeError:
+            print(f"Packet {p.summary()} has no query domain (qd) field.")
+        except Exception as e:
+            print(f"Error processing packet {p.summary()}: {e}")
+
+    return domain_names
+
 
 def filter_suspicious_packets(packets, max_payload_size):
     return [p for p in packets if TCP in p and len(p[TCP].payload) > max_payload_size]
