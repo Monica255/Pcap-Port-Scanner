@@ -48,6 +48,6 @@ def get_cvss_base_score(cve_id):
     except Exception as e:
         return -1  
 
-cve_id = "CVE-2016-0777"  
-base_score = get_cvss_base_score(cve_id)
-print(f"Base CVSS 3.0 Score for {cve_id}: {base_score}")
+# cve_id = "CVE-2016-0777"  
+# base_score = get_cvss_base_score(cve_id)
+# print(f"Base CVSS 3.0 Score for {cve_id}: {base_score}")
