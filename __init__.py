@@ -133,7 +133,7 @@ def create_app(test_config=None):
     def details(vulnerability_type):
         session_result = session.get('result', {})
         vulnerabilities = session_result.get('vulnerabilities', [])
-        vulnerability_details = None
+        vulnerability_details = []
 
         for vulnerability in vulnerabilities:
             if vulnerability['vulnerability_type'] == vulnerability_type and 'details' in vulnerability:
