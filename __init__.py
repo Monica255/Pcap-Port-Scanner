@@ -49,6 +49,7 @@ def create_app(test_config=None):
             result = analyze_pcap(save_path)
             filename = os.path.basename(result['file_name'])
             result['file_name'] = filename
+            session.pop('result', None)
             session['result'] = result
             return results(result)
         else:
@@ -134,6 +135,8 @@ def create_app(test_config=None):
         session_result = session.get('result', {})
         vulnerabilities = session_result.get('vulnerabilities', [])
         vulnerability_details = []
+        print(vulnerability_type)
+        print(session_result)
 
         for vulnerability in vulnerabilities:
             if vulnerability['vulnerability_type'] == vulnerability_type and 'details' in vulnerability:
