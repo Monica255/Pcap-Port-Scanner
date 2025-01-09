@@ -251,6 +251,7 @@
       let totalDetections = 0;
 
       vulnerabilities.forEach(v => {
+          if (v.cvss_score === -1) return;
           const cvssScore = v.cvss_score; 
           const weightedRisk = cvssScore * v.number_of_detected;
 
