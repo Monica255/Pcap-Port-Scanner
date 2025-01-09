@@ -5,8 +5,6 @@ class TestDetectDDOS(unittest.TestCase):
     def test_ddos_detected(self):
         # File PCAP yang mengandung aktivitas DDoS
         test_file = 'sample/(sample) ddos.pcap'
-
-        # Panggil fungsi untuk mendeteksi DDoS
         result = detect_ddos(test_file)
 
         # Verifikasi hasilnya
@@ -18,7 +16,6 @@ class TestDetectDDOS(unittest.TestCase):
     def test_no_ddos_detected(self):
         # File PCAP tanpa aktivitas DDoS
         test_file = 'sample/(exported) no action.pcapng'
-        
         result = detect_ddos(test_file)
 
         # Verifikasi hasilnya

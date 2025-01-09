@@ -14,7 +14,7 @@ class TestNetworkAnalysis(unittest.TestCase):
 
     def test_no_arp_spoofing_detected(self):
         # file PCAP yang tidak mengandung ARP spoofing
-        test_file = 'sample/(exported) sikuel.pcapng'
+        test_file = 'sample/(exported) no action.pcapng'
         result = detect_arp_spoofing(test_file)
         
         # Verifikasi hasilnya

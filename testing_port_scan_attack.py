@@ -5,8 +5,6 @@ class TestDetectPortScanning(unittest.TestCase):
     def test_port_scanning_detected(self):
         # File PCAP yang mengandung aktivitas port scanning
         test_file = 'sample/(exported) port scan.pcapng'
-
-        # Panggil fungsi untuk mendeteksi port scanning
         result = detect_port_scanning(test_file)
 
         # Verifikasi hasilnya
@@ -17,7 +15,6 @@ class TestDetectPortScanning(unittest.TestCase):
     def test_no_port_scanning_detected(self):
         # File PCAP tanpa aktivitas port scanning
         test_file = 'sample/(exported) no action.pcapng'
-
         result = detect_port_scanning(test_file)
 
         # Verifikasi hasilnya
