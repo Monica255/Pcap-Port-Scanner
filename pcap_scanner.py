@@ -143,8 +143,8 @@ def analyze_pcap(pcap_file):
     return result
 
 # Example usage
-# result = analyze_pcap('formbook.pcap')
-# print(result)
+result = analyze_pcap('sample/(sample) bruteforce.pcap')
+print(result)
 
 
 

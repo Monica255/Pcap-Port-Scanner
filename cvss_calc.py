@@ -48,8 +48,28 @@ def get_cvss_base_score(cve_id):
     except Exception as e:
         return -1  
 
-# cve_id = "CVE-2018-10757"  
-# base_score = get_cvss_base_score(cve_id)
-# print(f"Base CVSS 3.0 Score for {cve_id}: {base_score}")
-# arspoof - CVE-2019-15022
-# bruteforce port 80 -  CVE-2023-33868
+
+# # arspoof - CVE-2019-15022
+# arspoof = "CVE-2019-15022"  
+# base_score = get_cvss_base_score(arspoof)
+# print(f"Base CVSS 3.0 Score for arspoof {arspoof}: {base_score}")
+
+# # bruteforce port 80 -  CVE-2023-33868
+# bruteforce = "CVE-2023-33868"  
+# base_score = get_cvss_base_score(bruteforce)
+# print(f"Base CVSS 3.0 Score for bruteforce p80 {bruteforce}: {base_score}")
+
+# bruteforce port 22 - CVE-2020-1616
+bruteforce22 = "CVE-2020-1616"  
+base_score = get_cvss_base_score(bruteforce22)
+print(f"Base CVSS 3.0 Score for bruteforce p22 {bruteforce22}: {base_score}")
+
+# # ddos - CVE-2023-44487
+# ddos = "CVE-2023-44487"  
+# base_score = get_cvss_base_score(ddos)
+# print(f"Base CVSS 3.0 Score for ddos {ddos}: {base_score}")
+
+# # sql injection - CVE-2018-10757
+# sql = "CVE-2018-11776"  
+# base_score = get_cvss_base_score(sql)
+# print(f"Base CVSS 3.0 Score for sql injection {sql}: {base_score}")
