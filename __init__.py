@@ -75,7 +75,6 @@ def create_app(test_config=None):
     
     @app.route("/scan-network", methods=['POST'])
     def scan_network():
-        print(request.form)
         target_ip = request.form.get('network')
         result = network_scan(target_ip)
     
@@ -128,15 +127,32 @@ def create_app(test_config=None):
     @app.route("/http", methods=['GET'])
     def http():
         return render_template('http.html')
+    
+    @app.route("/recom-sql-injection", methods=['GET'])
+    def recom_sql():
+        return render_template('recom_sql_inject.html')
+    
+    @app.route("/recom-ddos", methods=['GET'])
+    def recom_ddos():
+        return render_template('recom_ddos.html')
+    
+    @app.route("/recom-bruteforce", methods=['GET'])
+    def recom_bruteforce():
+        return render_template('recom_bruteforce.html')
+    
+    @app.route("/recom-arp-spoof", methods=['GET'])
+    def recom_arp_spoof():
+        return render_template('recom_arp_spoof.html')
+    
+    @app.route("/recom-port-scan", methods=['GET'])
+    def recom_port_scan():
+        return render_template('recom_port_scan.html')
         
-
     @app.route('/details/<vulnerability_type>')
     def details(vulnerability_type):
         session_result = session.get('result', {})
         vulnerabilities = session_result.get('vulnerabilities', [])
         vulnerability_details = []
-        print(vulnerability_type)
-        print(session_result)
 
         for vulnerability in vulnerabilities:
             if vulnerability['vulnerability_type'] == vulnerability_type and 'details' in vulnerability:

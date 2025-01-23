@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apa Itu SQL Injection?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+    <div class="container mx-auto px-10 py-10">
+        <h1 class="text-3xl font-bold text-center text-blue-900">Apa Itu SQL Injection?</h1>
+
+        <div class="mt-10 bg-white shadow-md rounded-lg p-6">
+            <img src="/static/sql_inject.jpg" alt="SQL Injection" class="w-full h-auto rounded-lg">  <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Pengertian SQL Injection</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    SQL Injection adalah teknik serangan siber yang berbahaya. Penyerang memanfaatkan celah keamanan dalam aplikasi web untuk menyisipkan perintah SQL berbahaya ke dalam input pengguna. Tujuannya adalah untuk mengakses, memodifikasi, atau bahkan menghapus data sensitif dalam database.
+                </p>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Mengapa SQL Injection Berbahaya?</h2>
+                <ul class="list-disc list-inside text-gray-700 leading-relaxed mt-4">
+                    <li><strong>Akses Tidak Sah:</strong> Penyerang bisa mendapatkan akses ke data sensitif seperti password dan informasi pribadi.</li>
+                    <li><strong>Manipulasi Data:</strong> Data dalam database dapat diubah atau dihapus secara sembarangan.</li>
+                    <li><strong>Kerusakan Sistem:</strong> Dalam kasus ekstrim, serangan SQL Injection bisa melumpuhkan seluruh sistem.</li>
+                </ul>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Bagaimana Cara Kerjanya?</h2>
+                <ol class="list-decimal list-inside text-gray-700 leading-relaxed mt-4">
+                    <li><strong>Input Tidak Tervalidasi:</strong> Penyerang mencari formulir atau field yang tidak memvalidasi input pengguna.</li>
+                    <li><strong>Penyisipan Perintah SQL:</strong> Penyerang menambahkan perintah SQL jahat ke dalam input yang dikirimkan.</li>
+                    <li><strong>Eksekusi Perintah:</strong> Database mengeksekusi perintah yang disusupkan, memungkinkan penyerang mengakses data atau melakukan tindakan lain.</li>
+                </ul>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Cara Mencegah SQL Injection</h2>
+                <ul class="list-disc list-inside text-gray-700 leading-relaxed mt-4">
+                    <li><strong>Validasi Input:</strong> Selalu periksa dan batasi input pengguna.</li>
+                    <li><strong>Parameterized Queries:</strong> Pisahkan data pengguna dari query SQL.</li>
+                    <li><strong>Stored Procedures:</strong> Gunakan stored procedures untuk menjalankan query yang telah didefinisikan sebelumnya.</li>
+                    <li><strong>Web Application Firewall (WAF):** Lindungi aplikasi web dari berbagai jenis serangan, termasuk SQL Injection.</li>
+                </ul>
+            </section>
+
+            <div class="mt-6 text-gray-700 text-center">
+                <p>Referensi: 
+                    <a href="https://bif.telkomuniversity.ac.id/langkah-langkah-mengamankan-aplikasi-web-dari-serangan-sql-injection/" target="_blank" class="text-blue-700 hover:underline">
+                        Cara Mencegah Serangan SQL Injection
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

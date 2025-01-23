@@ -188,9 +188,17 @@
                   
                   
                   <td class="px-4 py-2 border">
-                    {% if vulnerability['message'] %} {{ vulnerability['message'] }} {% else %}
-                    No description available {% endif %}
+                    {% if vulnerability['message'] %}
+                      {{ vulnerability['message']|safe }}
+                      {% if 'path' in vulnerability %}
+                        <br>
+                        <a href="{{ vulnerability['path'] }}" class="text-blue-700 hover:underline" target="_blank">Baca selengkapnya</a>
+                      {% endif %}
+                    {% else %}
+                      No description available
+                    {% endif %}
                   </td>
+     
                 </tr>
                 {% endfor %}
                 {% else %}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apa Tujuan Pemindaian?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+    <div class="container mx-auto px-10 py-10">
+        <!-- Judul Utama -->
+        <h1 class="text-3xl font-bold text-center text-blue-900">Apa Itu Serangan Port Scanning dan Cara Mengatasinya</h1>
+
+        <div class="mt-10 bg-white shadow-md rounded-lg p-6">
+            <!-- Gambar Ilustrasi -->
+            <img src="/static/port-scan.png" alt="Serangan DDoS" class="w-full h-auto rounded-lg mb-6"> 
+
+            <!-- Penjelasan Tujuan Pemindaian -->
+            <section>
+                <p class="text-gray-700 leading-relaxed">
+                    Bergantung pada siapa yang melakukannya, tujuan pemindaian dapat berupa untuk melindungi atau merusak sistem Anda. Tujuan pemindaian juga merupakan hal yang membedakan peretas etis (white-hat) dari peretas tidak etis (black-hat). Berikut alasannya:
+                </p>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    <strong>Dalam peretasan etis</strong>, pemindaian digunakan untuk menemukan potensi kelemahan keamanan dan melaporkannya ke organisasi sehingga dapat diperbaiki sebelum aktor jahat dapat mengeksploitasinya.
+                </p>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    <strong>Dalam peretasan yang tidak etis</strong>, pemindaian juga digunakan untuk mengidentifikasi kerentanan, tetapi dengan tujuan mendapatkan akses tidak sah atau meluncurkan serangan, untuk keuntungan pribadi atau menyebabkan kerugian pada target.
+                </p>
+            </section>
+
+            <!-- Penjelasan Serangan Pemindaian -->
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Apa itu Serangan Pemindaian?</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    Pemindaian bukanlah serangan, tetapi lebih merupakan teknik yang digunakan untuk mengidentifikasi kerentanan sistem dan jaringan. Namun, pemindaian dapat menyebabkan serangan siber jika dilakukan oleh pelaku jahat yang menggunakannya untuk mendapatkan informasi spesifik tentang target mereka.
+                </p>
+                <ul class="list-disc list-inside text-gray-700 leading-relaxed mt-4">
+                    <li>Alamat IP dan nama host</li>
+                    <li>Port dan layanan terbuka</li>
+                    <li>Informasi sistem operasi & perangkat lunak</li>
+                    <li>Informasi akun pengguna</li>
+                    <li>Arsitektur jaringan</li>
+                    <li>Kerentanan aplikasi dan layanan</li>
+                </ul>
+            </section>
+
+            <!-- Penjelasan Cara Kerja Serangan Pemindaian -->
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Bagaimana Cara Kerja Serangan Pemindaian?</h2>
+                <p class="text-gray-700 leading-relaxed">
+                    Selama pemindaian, berbagai paket data dikirim ke sistem atau jaringan untuk mengidentifikasi port dan layanan apa yang terbuka. Teknik ini dapat dilakukan dengan menggunakan alat otomatis seperti pemindai port atau pemindai kerentanan.
+                </p>
+            </section>
+
+            <!-- Jenis-Jenis Pemindaian -->
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Jenis-Jenis Pemindaian</h2>
+                <ul class="list-disc list-inside text-gray-700 leading-relaxed mt-4">
+                    <li><strong>Pemindaian Port:</strong> Mengidentifikasi port yang terbuka dan layanan yang berjalan di port tersebut.</li>
+                    <li><strong>Pemindaian/Pemetaan Jaringan:</strong> Mengidentifikasi perangkat di jaringan dan interkoneksinya.</li>
+                    <li><strong>Pemindaian Kerentanan:</strong> Menggunakan alat otomatis untuk menemukan kerentanan yang diketahui dalam sistem atau jaringan.</li>
+                </ul>
+            </section>
+
+            <!-- Pencegahan Serangan Pemindaian -->
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Bagaimana Mencegah Serangan Pemindaian?</h2>
+                <ul class="list-disc list-inside text-gray-700 leading-relaxed mt-4">
+                    <li>Gunakan firewall untuk memblokir upaya pemindaian port.</li>
+                    <li>Perbarui perangkat lunak dan sistem secara berkala.</li>
+                    <li>Gunakan sistem deteksi dan pencegahan intrusi (IDS).</li>
+                    <li>Terapkan kontrol akses ke data sensitif.</li>
+                    <li>Lakukan pemindaian kerentanan secara berkala.</li>
+                    <li>Didik staf Anda tentang praktik keamanan terbaik.</li>
+                </ul>
+            </section>
+
+            <!-- Referensi -->
+            <div class="mt-6 text-gray-700 text-center">
+                <p>Referensi: 
+                    <a href="https://heimdalsecurity.com/blog/scanning-attack-what-it-is-and-how-to-protect-your-organization-against-it/" target="_blank" class="text-blue-700 hover:underline">
+                        Cara Kerja dan Penanganan Serangan Pemindaian Port
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

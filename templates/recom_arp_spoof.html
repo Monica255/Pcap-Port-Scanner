@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tinjauan Umum ARP Anti-Spoofing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+    <div class="container mx-auto px-10 py-10">
+        <h1 class="text-3xl font-bold text-center text-blue-900">Tinjauan Umum ARP Anti-Spoofing</h1>
+
+        <div class="mt-10 bg-white shadow-md rounded-lg p-6">
+            <img src="/static/arp_spoof.jpg" alt="ARP Spoofing Illustration" class="w-full h-auto rounded-lg">  
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Apa Itu ARP?</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    ARP (Address Resolution Protocol) menyediakan komunikasi IP dalam domain siaran dengan memetakan alamat IP ke alamat MAC. Misalnya, host B ingin mengirim informasi ke host A tetapi tidak memiliki alamat MAC host A dalam cache ARP-nya. Dalam istilah ARP, host B adalah pengirim dan host A adalah target.
+                </p>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Bagaimana Serangan ARP Spoofing Terjadi?</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Serangan spoofing ARP terjadi karena ARP mengizinkan balasan dari host meskipun permintaan ARP tidak diterima. Setelah serangan, semua lalu lintas dari perangkat yang diserang mengalir melalui komputer penyerang dan kemudian ke router, switch, atau host. Hal ini dikenal sebagai ARP cache poisoning.
+                </p>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Gambar: Contoh ARP Spoofing</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Host A, B, dan C terhubung ke perangkat pada antarmuka A, B, dan C, yang berada pada subnet yang sama. Dengan memanfaatkan kelemahan ARP, host C dapat meracuni cache ARP host A dan B untuk menyadap lalu lintas di jaringan.
+                </p>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Cara Mencegah ARP Spoofing</h2>
+                <ul class="list-disc list-inside text-gray-700 leading-relaxed mt-4">
+                    <li><strong>Mengaktifkan ARP Anti-Spoofing:</strong> Semua paket ARP diperiksa dengan tabel pengikatan statis atau tabel ARP statis.</li>
+                    <li><strong>Mengonfigurasi Perlindungan Host:</strong> Mengikat alamat IP atau MAC ke port tertentu untuk mencegah manipulasi.</li>
+                    <li><strong>Mengonfigurasi Pemeriksaan Konsistensi Alamat MAC Sumber:</strong> Memastikan alamat MAC dalam paket ARP sesuai dengan tabel ARP.</li>
+                    <li><strong>Mengonfigurasi Gateway Anti-Spoofing:</strong> Mencegah host menyerang gateway dengan mengirim ARP palsu.</li>
+                    <li><strong>Mengonfigurasi Port Kepercayaan:</strong> Menentukan port tepercaya untuk meminimalkan pemeriksaan pada port yang terpercaya.</li>
+                </ul>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Serangan Flood ARP</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Serangan flood ARP terjadi ketika paket ARP membanjiri CPU perangkat, memengaruhi kinerja jaringan. Untuk mencegahnya, Anda dapat mengaktifkan serangan anti-banjir ARP, mengatur ambang batas kecepatan aliran ARP, dan mengelola daftar alamat lubang hitam.
+                </p>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Langkah Pencegahan Tambahan</h2>
+                <ul class="list-disc list-inside text-gray-700 leading-relaxed mt-4">
+                    <li><strong>Mengonfigurasi Serangan Anti-Banjir:</strong> Mengidentifikasi dan membatasi aliran ARP berdasarkan ambang batas kecepatan.</li>
+                    <li><strong>Pemantauan ARP Snooping:</strong> Memastikan lalu lintas ARP diawasi untuk mencegah manipulasi data.</li>
+                </ul>
+            </section>
+
+            <div class="mt-6 text-gray-700 text-center">
+                <p>Referensi: 
+                    <a href="https://www.cisco.com/c/en/us/td/docs/switches/lan/catalyst_pon/software/configuration_guide/sec/b-gpon-config-security/preventing_arf_spoofing_and_flood_attack.html" target="_blank" class="text-blue-700 hover:underline">
+                        Detail ARP Anti-Spoofing dan Pencegahan Serangan
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
