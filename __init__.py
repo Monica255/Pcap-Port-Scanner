@@ -2,6 +2,7 @@ import os
 from .pcap_scanner import analyze_pcap
 from .portscanner import*
 from flask import Flask, render_template,request, session
+from flask_session import Session
 
 global_result = {}
 
@@ -10,9 +11,14 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY='dev',
         DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
+        SESSION_TYPE='filesystem',  # Store session data in the filesystem
+        SESSION_FILE_DIR=os.path.join(app.instance_path, 'sessions'),  # Directory for session files
+        SESSION_PERMANENT=False, 
     )
-
+    
     app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+    Session(app) 
 
     if test_config is None:
         app.config.from_pyfile('config.py', silent=True)
@@ -20,6 +26,7 @@ def create_app(test_config=None):
         app.config.from_mapping(test_config)
     try:
         os.makedirs(app.instance_path)
+        os.makedirs(app.config['SESSION_FILE_DIR'], exist_ok=True) 
     except OSError:
         pass
 
@@ -51,6 +58,7 @@ def create_app(test_config=None):
             result['file_name'] = filename
             session.pop('result', None)
             session['result'] = result
+            # print(result)
             return results(result)
         else:
             error = 'Invalid file type. Only .pcap and .pcapng files are allowed.'
@@ -147,6 +155,10 @@ def create_app(test_config=None):
     @app.route("/recom-port-scan", methods=['GET'])
     def recom_port_scan():
         return render_template('recom_port_scan.html')
+    
+    @app.route("/risk-description", methods=['GET'])
+    def risk_description():
+        return render_template('risk_description.html')
         
     @app.route('/details/<vulnerability_type>')
     def details(vulnerability_type):

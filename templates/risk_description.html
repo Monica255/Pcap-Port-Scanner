@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Tingkat Risiko</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+    <div class="container mx-auto px-10 py-10">
+        <h1 class="text-4xl font-bold text-center text-blue-900">Label Tingkat Risiko</h1>
+
+        <!-- Bagian 1: Pengantar -->
+        <section class="mt-10 bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-3xl font-semibold text-blue-700">Apa Itu Tingkat Risiko?</h2>
+            <p class="text-gray-700 text-lg leading-relaxed mt-4">
+                Tingkat risiko memberikan klasifikasi kerentanan berdasarkan tingkat keparahan, dampak, dan kemungkinan eksploitasi. 
+                Tingkatan ini dikategorikan menjadi lima kelompok: None, Low, Medium, High, dan Critical. 
+                Setiap tingkatan membantu menentukan respons yang diperlukan untuk memastikan keamanan sistem.
+            </p>
+        </section>
+
+        <!-- Bagian 2: Tingkat Risiko -->
+        <section class="mt-10 bg-white shadow-md rounded-lg p-6">
+            <h2 class="text-3xl font-semibold text-blue-700">Tingkat Risiko</h2>
+            <p class="text-gray-700 text-lg leading-relaxed mt-4">
+                Di bawah ini adalah definisi dari setiap tingkat risiko, dikategorikan berdasarkan warna, rentang nilai, dan tingkat keparahan:
+            </p>
+            <div class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Risiko: None -->
+                <div class="flex items-center p-4 bg-blue-100 border-l-4 border-blue-500 rounded-lg">
+                    <div class="w-4 h-4 rounded-full" style="background-color: #36A2EB;"></div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-blue-700">None</h3>
+                        <p class="text-gray-600 text-base">Nilai: 0</p>
+                        <p class="text-gray-600 text-base">Kerentanan tidak berdampak apapun bagi sistem.</p>
+                    </div>
+                </div>
+
+                <!-- Risiko: Rendah -->
+                <div class="flex items-center p-4 bg-green-100 border-l-4 border-green-500 rounded-lg">
+                    <div class="w-4 h-4 rounded-full" style="background-color: #6FCF97;"></div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-green-700">Rendah</h3>
+                        <p class="text-gray-600 text-base">Rentang: 0.1 - 3.9</p>
+                        <p class="text-gray-600 text-base">Terdapat kerentanan namun tidak cukup untuk melakukan eksploitasi sistem.</p>
+                    </div>
+                </div>
+
+                <!-- Risiko: Sedang -->
+                <div class="flex items-center p-4 bg-yellow-100 border-l-4 border-yellow-500 rounded-lg">
+                    <div class="w-4 h-4 rounded-full" style="background-color: #FFCE56;"></div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-yellow-700">Sedang</h3>
+                        <p class="text-gray-600 text-base">Rentang: 4.0 - 6.9</p>
+                        <p class="text-gray-600 text-base">Tingkat kerentanan sedang dan ada kemungkinan penyerang dapat melakukan eksploitasi terhadap sistem.</p>
+                    </div>
+                </div>
+
+                <!-- Risiko: Tinggi -->
+                <div class="flex items-center p-4 bg-orange-100 border-l-4 border-orange-500 rounded-lg">
+                    <div class="w-4 h-4 rounded-full" style="background-color: #FF9F40;"></div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-orange-700">Tinggi</h3>
+                        <p class="text-gray-600 text-base">Rentang: 7.0 - 8.9</p>
+                        <p class="text-gray-600 text-base">Kerentanan yang sangat tinggi dengan potensi besar bagi penyerang untuk mengeksploitasi sistem.</p>
+                    </div>
+                </div>
+
+                <!-- Risiko: Kritis -->
+                <div class="flex items-center p-4 bg-red-100 border-l-4 border-red-500 rounded-lg">
+                    <div class="w-4 h-4 rounded-full" style="background-color: #FF6384;"></div>
+                    <div class="ml-4">
+                        <h3 class="text-xl font-semibold text-red-700">Kritis</h3>
+                        <p class="text-gray-600 text-base">Rentang: 9.0 - 10.0</p>
+                        <p class="text-gray-600 text-base">Kerentanan sangat parah yang memungkinkan penyerang dengan mudah mengeksploitasi sistem.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
