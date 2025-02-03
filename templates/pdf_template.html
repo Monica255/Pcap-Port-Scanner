@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCAP Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-5 lg:px-20 py-10">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 pb-3 border-gray-900">
+                Hasil Deteksi pada File PCAP
+              </h1>
+            <p class="text-sm text-gray-500 mb-6">
+            Berikut rincian dan temuan dari berkas PCAP yang diunggah.
+            </p>
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Detail File</h2>
+            <table>
+                <tr><th>Nama File</th><td>{{ result['file_name'] }}</td></tr>
+                <tr><th>Waktu Mulai</th><td>{{ result['start_time'] }}</td></tr>
+                <tr><th>Waktu Berakhir</th><td>{{ result['end_time'] }}</td></tr>
+            </table>
+
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4 mt-4">DNS Domains</h2>
+            <table>
+                
+                {% for i in range(0, result['dns_domains']|length, 3) %}
+                <tr>
+                    {% for j in range(3) %}
+                    {% if i + j < result['dns_domains']|length %}
+                    <td>{{ result['dns_domains'][i + j] }}</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </table>
+
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4 mt-4">Paket</h2>
+            <table>
+                <tr><th>Paket TCP</th><td>{{ result['tcp_packets_count'] }}</td></tr>
+                <tr><th>Paket UDP</th><td>{{ result['udp_packets_count'] }}</td></tr>
+                <tr><th>Paket ICMP</th><td>{{ result['icmp_packets_count'] }}</td></tr>
+                <tr><th>Paket HTTP</th><td>{{ result['http_packets_count'] }}</td></tr>
+                <tr><th>Paket mencurigakan</th><td>{{ result['suspicious_packets_count'] }}</td></tr>
+                <tr><th>Lalu Lintas Tidak Terenkripsi</th><td>{{ result['unencrypted_traffic'] }}</td></tr>
+            </table>
+            <!-- <ul>
+                <li><strong>Paket TCP:</strong> {{ result.tcp_packets_count }}</li>
+                <li><strong>Paket UDP:</strong> {{ result.udp_packets_count }}</li>
+                <li><strong>Paket ICMP:</strong> {{ result.icmp_packets_count }}</li>
+                <li><strong>Paket HTTP:</strong> {{ result.http_packets_count }}</li>
+                <li><strong>Paket mencurigakan:</strong> {{ result.suspicious_packets_count }}</li>
+                <li><strong>Lalu Lintas Tidak Terenkripsi:</strong> {{ result.unencrypted_traffic }}</li>
+            </ul> -->
+
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4 mt-4">Ringkasan Kerentanan</h2>
+            <table>
+                <tr>
+                    <th>Tipe</th>
+                    <th>Jumlah</th>
+                    <th>CVSS Score</th>
+                    <th>Deskripsi</th>
+                </tr>
+                {% for vuln in result['vulnerabilities'] %}
+                <tr>
+                    <td>{{ vuln['vulnerability_type'] }}</td>
+                    <td>{{ vuln['number_of_detected'] }}</td>
+                    <td>
+                        {% if vuln['cvss_score'] == -1 %}
+                            -
+                        {% else %}
+                            {{ vuln['cvss_score'] }}
+                        {% endif %}
+                    </td>
+                    <td>{{ vuln['message'] }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <h3>Detail {{ vuln['vulnerability_type'] }}</h3>
+                        <table>
+                            <tr>
+                                {% for key in vuln['details'][0].keys() %}
+                                <th>{{ key }}</th>
+                                {% endfor %}
+                            </tr>
+                            {% for detail in vuln['details'] %}
+                            <tr>
+                                {% for value in detail.values() %}
+                                <td>{{ value }}</td>
+                                {% endfor %}
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    
+</body>
+</html>

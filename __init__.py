@@ -1,8 +1,12 @@
 import os
 from .pcap_scanner import analyze_pcap
 from .portscanner import*
-from flask import Flask, render_template,request, session
+from flask import Flask, render_template,request, session, send_file,make_response
 from flask_session import Session
+# import pdfkit
+# import weasyprint
+# from weasyprint import HTML
+
 
 global_result = {}
 
@@ -159,7 +163,31 @@ def create_app(test_config=None):
     @app.route("/risk-description", methods=['GET'])
     def risk_description():
         return render_template('risk_description.html')
-        
+
+    @app.route('/report')
+    def download_pdf():
+        session_result = session.get('result', {})
+        # html_content = render_template('pdf_template.html',result=session_result)
+
+        # # Path to save the generated PDF
+        # output_pdf = 'output.pdf'
+        # options = {'page-size': 'A4', 'margin-top': '0.75in', 'margin-right': '0.75in', 'margin-bottom': '0.75in', 'margin-left': '0.75in'}
+
+        # # Convert the rendered HTML content to PDF
+        # pdfkit.from_string(html_content, False, options=options)
+
+        # # Send the generated PDF file to the user for download
+        # return send_file(output_pdf, attachment_filename=output_pdf,as_attachment=True)
+
+        # pdf = weasyprint.HTML(string=html_content).write_pdf()
+        # # Create a response with the PDF as an attachment
+        # response = make_response(pdf)
+        # response.headers['Content-Type'] = 'application/pdf'
+        # response.headers['Content-Disposition'] = 'attachment; filename=output.pdf'
+        # return response
+
+        return render_template('pdf_template.html', result=session_result)
+
     @app.route('/details/<vulnerability_type>')
     def details(vulnerability_type):
         session_result = session.get('result', {})
