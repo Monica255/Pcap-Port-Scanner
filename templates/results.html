@@ -30,11 +30,11 @@
                 </tr>
                 <tr>
                   <th class="px-4 py-2 font-medium text-gray-700">Waktu Mulai</th>
-                  <td class="px-4 py-2">{{ result['start_time'] }}</td>
+                  <td class="px-4 py-2">{{ result['start_time'] | datetimeformat}} </td>
                 </tr>
                 <tr class="bg-gray-50">
                   <th class="px-4 py-2 font-medium text-gray-700">Waktu Berakhir</th>
-                  <td class="px-4 py-2">{{ result['end_time'] }}</td>
+                  <td class="px-4 py-2">{{ result['end_time'] | datetimeformat}} </td>
                 </tr>
                 <tr>
                   <th class="px-4 py-2 font-medium text-gray-700">Durasi</th>

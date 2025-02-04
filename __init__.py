@@ -6,6 +6,12 @@ from flask_session import Session
 # import pdfkit
 # import weasyprint
 # from weasyprint import HTML
+from datetime import datetime
+from flask import Flask, render_template
+
+
+def datetimeformat(value):
+    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f").strftime("%d-%m-%Y %H:%M:%S")
 
 
 global_result = {}
@@ -19,6 +25,8 @@ def create_app(test_config=None):
         SESSION_FILE_DIR=os.path.join(app.instance_path, 'sessions'),  # Directory for session files
         SESSION_PERMANENT=False, 
     )
+
+    app.jinja_env.filters['datetimeformat'] = datetimeformat
     
     app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
