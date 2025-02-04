@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PCAP Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        table {
+            table-layout: fixed;
+            width: 100%;
+        }
+        td, th {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mx-auto px-5 lg:px-20 py-10">
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-4 border-b-2 pb-3 border-gray-900">
+                Laporan Hasil Pemindaian Port
+              </h1>
+            <p class="text-sm text-gray-500 mb-6">
+                Berikut rincian dan temuan dari pemindaian port yang telah dilakukan.
+            </p>
+            <h2 class="text-2xl font-semibold text-gray-900 mb-4">Detail File</h2>
+            <table>
+                <tr><th>Tipe Pemindaian</th><td>{{ result['type'] }}</td></tr>
+                <tr><th>Alamat IP</th><td>{{ result['ip_address'] }}</td></tr>
+                <tr><th>Port Awal</th><td>{{ result['start_port'] }}</td></tr>
+                <tr><th>Port Akhir</th><td>{{ result['end_port'] }}</td></tr>
+            </table>
+
+            <div class="mb-8">
+                <h2 class="text-2xl font-semibold text-blue-900 mb-4">Port Terbuka</h2>
+                <p class="text-sm text-gray-500 mb-4">
+                  Berikut adalah daftar port terbuka yang ditemukan selama pemindaian:
+                </p>
+                
+                {% if result['open_ports'] %}
+                <div class="overflow-x-auto">
+                  <table class="table-auto w-full text-sm text-left text-gray-600 border border-gray-300">
+                    <thead>
+                      <tr class="bg-gray-50">
+                        <th class="px-4 py-3 border-b font-medium text-gray-700">Port</th>
+                        <th class="px-4 py-3 border-b font-medium text-gray-700">State</th>
+                        <th class="px-4 py-3 border-b font-medium text-gray-700">Servis</th>
+                        <th class="px-4 py-3 border-b font-medium text-gray-700">Reason</th>
+                        <th class="px-4 py-3 border-b font-medium text-gray-700">Produk</th>
+                        <th class="px-4 py-3 border-b font-medium text-gray-700">Versi</th>
+                        <th class="px-4 py-3 border-b font-medium text-gray-700">Info Lain</th>
+                        <th class="px-4 py-3 border-b font-medium text-gray-700">Pesan</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {% for port in result['open_ports'] %}
+                      <tr>
+                        <td class="px-4 py-2 border">{{ port['port'] }}</td>
+                        <td class="px-4 py-2 border">{{ port['state'] }}</td>
+                        <td class="px-4 py-2 border">{{ port['name'] or 'N/A' }}</td>
+                        <td class="px-4 py-2 border">{{ port['reason'] }}</td>
+                        <td class="px-4 py-2 border">{{ port['product'] or 'N/A' }}</td>
+                        <td class="px-4 py-2 border">{{ port['version'] or 'N/A' }}</td>
+                        <td class="px-4 py-2 border">{{ port['extrainfo'] or 'N/A' }}</td>
+                        <td class="px-4 py-2 border">{{ port['message'] or 'N/A' }}</td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                </div>
+                {% else %}
+                <p class="text-gray-500">Tidak ada port terbuka.</p>
+                {% endif %}
+              </div>
+        </div>
+    </div>
+    
+</body>
+</html>
