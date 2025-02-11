@@ -26,6 +26,7 @@ def get_cvss_base_score(cve_id):
             return -1
         
         response_json = response.json()
+        # print(response_json)
         vulnerabilities = response_json.get('vulnerabilities', [])
         
         if not vulnerabilities:
@@ -60,16 +61,17 @@ def get_cvss_base_score(cve_id):
 # print(f"Base CVSS 3.0 Score for bruteforce p80 {bruteforce}: {base_score}")
 
 # bruteforce port 22 - CVE-2020-1616
-bruteforce22 = "CVE-2020-1616"  
-base_score = get_cvss_base_score(bruteforce22)
-print(f"Base CVSS 3.0 Score for bruteforce p22 {bruteforce22}: {base_score}")
+# bruteforce22 = "CVE-2020-1616"  
+# base_score = get_cvss_base_score(bruteforce22)
+# print(f"Base CVSS 3.0 Score for bruteforce p22 {bruteforce22}: {base_score}")
 
 # # ddos - CVE-2023-44487
 # ddos = "CVE-2023-44487"  
 # base_score = get_cvss_base_score(ddos)
 # print(f"Base CVSS 3.0 Score for ddos {ddos}: {base_score}")
 
-# # sql injection - CVE-2018-10757
+# sql injection - CVE-2018-10757
 # sql = "CVE-2018-11776"  
 # base_score = get_cvss_base_score(sql)
 # print(f"Base CVSS 3.0 Score for sql injection {sql}: {base_score}")
+

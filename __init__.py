@@ -11,7 +11,14 @@ from flask import Flask, render_template
 
 
 def datetimeformat(value):
-    return datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f").strftime("%d-%m-%Y %H:%M:%S")
+    months = {
+        "01": "Januari", "02": "Februari", "03": "Maret", "04": "April",
+        "05": "Mei", "06": "Juni", "07": "Juli", "08": "Agustus",
+        "09": "September", "10": "Oktober", "11": "November", "12": "Desember"
+    }
+    
+    dt = datetime.strptime(value, "%Y-%m-%dT%H:%M:%S.%f")
+    return f"{dt.day} {months[dt.strftime('%m')]} {dt.year} {dt.strftime('%H:%M:%S')}"
 
 
 global_result = {}
@@ -75,7 +82,6 @@ def create_app(test_config=None):
         else:
             error = 'Invalid file type. Only .pcap and .pcapng files are allowed.'
             return index(error)
-    
 
     @app.route("/scan-port", methods=['POST'])
     def scan_port():
@@ -180,10 +186,10 @@ def create_app(test_config=None):
         # Path to save the generated PDF
         options = {'page-size': 'A4', 'margin-top': '0.75in', 'margin-right': '0.75in', 'margin-bottom': '0.75in', 'margin-left': '0.75in'}
 
-        config = pdfkit.configuration(wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe")
+        # config = pdfkit.configuration(wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe")
 
         # Convert the rendered HTML content to PDF
-        pdf = pdfkit.from_string(html_content, False, options=options,configuration=config)
+        pdf = pdfkit.from_string(html_content, False)
 
         headers = {
             'Content-Type': 'application/pdf',
