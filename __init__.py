@@ -178,6 +178,10 @@ def create_app(test_config=None):
     def risk_description():
         return render_template('risk_description.html')
 
+    @app.route("/tutorial-otomasi", methods=['GET'])
+    def tutorial_otomasi():
+        return render_template('tutorial_otomasi.html')
+
     @app.route('/report')
     def download_pdf():
         session_result = session.get('result', {})

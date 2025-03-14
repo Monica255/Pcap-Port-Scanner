@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCPDump Capture Tutorial</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-slate-100">
+    <div class="container mx-auto px-10 py-10">
+        <h1 class="text-3xl font-bold text-center text-blue-900">Tutorial: Menangkap Paket Jaringan dengan TCPDump</h1>
+
+        <div class="mt-10 bg-white shadow-md rounded-lg p-6">
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Step 1: Install TCPDump</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    TCPDump adalah alat baris perintah yang digunakan untuk menangkap lalu lintas jaringan. Install TCPDump dengan perintah berikut:
+                </p>
+                <pre class="bg-gray-200 p-4 rounded mt-4 text-sm">sudo apt update && sudo apt install -y tcpdump</pre>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Step 2: Buat Script untuk Menyimpan Capture</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Buat file script
+                </p>
+                <pre class="bg-gray-200 p-4 rounded mt-4 text-sm"> sudo nano /usr/local/bin/packet_capture.sh</pre>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Isi script dengan kode berikut
+                </p>
+                <pre class="bg-gray-200 p-4 rounded mt-4 text-sm">
+#!/bin/bash
+
+# Direktori penyimpanan file capture
+OUTPUT_DIR="/var/packet_captures"
+
+# Pastikan direktori ada
+mkdir -p "SOUTPUT_DIR"
+
+# Generate nama file dengan timestamp
+FILENAME="SOUTPUT _DIR/capture_$(date +'%Y%m%d_%HM%S') -pcap"
+
+# Jalankan topdump dengan timeout 60 detik
+/usr/bin/timeout 60 /usr/bin/tcpdump -i ethe -s® -w "SFILENAME"
+
+# Hapus file capture yang lebih dari 7 hari (opsional)
+find "SOUTPUT_DIR" -name "*,pcap" -mtime +7 -exec rm () \;
+                </pre>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Step 3: Berikan Izin Eksekusi pada Script</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Agar script dapat dijalankan, berikan izin eksekusi dengan perintah berikut:
+                </p>
+                <pre class="bg-gray-200 p-4 rounded mt-4 text-sm">sudo chmod +x /usr/local/bin/packet_capture.sh</pre>
+            </section>
+
+            <section class="mt-10">
+                <h2 class="text-2xl font-semibold text-blue-700">Step 4: Atur Cron Job untuk Otomatisasi</h2>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Gunakan cron job untuk menjalankan script secara otomatis setiap jam. Buka crontab dengan perintah:
+                </p>
+                <pre class="bg-gray-200 p-4 rounded mt-4 text-sm">crontab -e</pre>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Tambahkan baris berikut di akhir file untuk menjalankan script setiap jam:
+                </p>
+                <pre class="bg-gray-200 p-4 rounded mt-4 text-sm">* * * * * /usr/local/bin/packet_capture.sh ›/dev/null 2>&1</pre>
+                <p class="text-gray-700 leading-relaxed mt-4">
+                    Simpan perubahan dan keluar dari editor.
+                </p>
+            </section>
+            <div class="mt-6 text-center">
+                <a href="/" class="px-6 py-3 bg-blue-700 text-white rounded-lg shadow-md hover:bg-blue-800 inline-block">
+                    Kembali
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
