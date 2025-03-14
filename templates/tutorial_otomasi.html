@@ -66,6 +66,19 @@ find "SOUTPUT_DIR" -name "*,pcap" -mtime +7 -exec rm () \;
                     Tambahkan baris berikut di akhir file untuk menjalankan script setiap jam:
                 </p>
                 <pre class="bg-gray-200 p-4 rounded mt-4 text-sm">* * * * * /usr/local/bin/packet_capture.sh ›/dev/null 2>&1</pre>
+                <section class="mt-10 text-left">
+                    <img src="/static/cron.png" alt="Struktur Cron Job" class="w-1/2 mx-auto">
+                    <p class="text-gray-700 leading-relaxed mt-4">
+                        Gambar di atas menunjukkan format penulisan cron job. Setiap cron job memiliki lima kolom pertama yang menunjukkan jadwal waktu eksekusi, dengan urutan sebagai berikut:
+                    </p>
+                    <ul class="list-disc list-inside text-gray-700 mt-4">
+                        <li><strong>Menit (0 - 59)</strong> → Waktu dalam menit</li>
+                        <li><strong>Jam (0 - 23)</strong> → Waktu dalam jam</li>
+                        <li><strong>Hari dalam bulan (1 - 31)</strong> → Tanggal eksekusi</li>
+                        <li><strong>Bulan (1 - 12)</strong> → Bulan eksekusi</li>
+                        <li><strong>Hari dalam minggu (0 - 7)</strong> → Hari dalam seminggu (0 dan 7 = Minggu)</li>
+                    </ul>
+                </section>
                 <p class="text-gray-700 leading-relaxed mt-4">
                     Simpan perubahan dan keluar dari editor.
                 </p>
